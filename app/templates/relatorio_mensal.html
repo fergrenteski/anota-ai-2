@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+
+{% block title %}Relatório Mensal - Anota-ai{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3 mb-0">Relatório Mensal</h1>
+            <div>
+                <button class="btn btn-outline-primary me-2">
+                    <i class="bi bi-download"></i> Exportar PDF
+                </button>
+                <button class="btn btn-primary">
+                    <i class="bi bi-arrow-clockwise"></i> Atualizar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cards de Resumo Mensal -->
+<div class="row mb-4">
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <div class="bg-primary bg-opacity-10 rounded-circle p-2">
+                            <i class="bi bi-calendar-month text-primary fs-5"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="text-muted small">Período</div>
+                        <div class="fw-bold">Agosto 2025</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <div class="bg-success bg-opacity-10 rounded-circle p-2">
+                            <i class="bi bi-arrow-up-circle text-success fs-5"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="text-muted small">Total Receitas</div>
+                        <div class="fw-bold text-success">R$ 4.500,00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <div class="bg-danger bg-opacity-10 rounded-circle p-2">
+                            <i class="bi bi-arrow-down-circle text-danger fs-5"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="text-muted small">Total Despesas</div>
+                        <div class="fw-bold text-danger">R$ 3.290,00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <div class="bg-info bg-opacity-10 rounded-circle p-2">
+                            <i class="bi bi-calculator text-info fs-5"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="text-muted small">Resultado</div>
+                        <div class="fw-bold text-info">R$ 1.210,00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Gráfico de Categorias -->
+<div class="row">
+    <div class="col-lg-8 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Despesas por Categoria - Últimos 6 Meses</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="categoriasChart" style="height: 400px;"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">Distribuição Atual</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="distribuicaoChart" style="height: 300px;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tabela de Transações -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Resumo por Categoria</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Categoria</th>
+                                <th class="text-end">Orçado</th>
+                                <th class="text-end">Gasto</th>
+                                <th class="text-end">Diferença</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge bg-danger me-2"></span>Moradia</td>
+                                <td class="text-end">R$ 1.200,00</td>
+                                <td class="text-end">R$ 1.200,00</td>
+                                <td class="text-end text-warning">R$ 0,00</td>
+                                <td class="text-center"><i class="bi bi-check-circle text-success"></i></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-warning me-2"></span>Alimentação</td>
+                                <td class="text-end">R$ 800,00</td>
+                                <td class="text-end">R$ 890,00</td>
+                                <td class="text-end text-danger">-R$ 90,00</td>
+                                <td class="text-center"><i class="bi bi-exclamation-triangle text-warning"></i></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-info me-2"></span>Transporte</td>
+                                <td class="text-end">R$ 500,00</td>
+                                <td class="text-end">R$ 440,00</td>
+                                <td class="text-end text-success">+R$ 60,00</td>
+                                <td class="text-center"><i class="bi bi-check-circle text-success"></i></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-primary me-2"></span>Saúde</td>
+                                <td class="text-end">R$ 300,00</td>
+                                <td class="text-end">R$ 220,00</td>
+                                <td class="text-end text-success">+R$ 80,00</td>
+                                <td class="text-center"><i class="bi bi-check-circle text-success"></i></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-secondary me-2"></span>Lazer</td>
+                                <td class="text-end">R$ 400,00</td>
+                                <td class="text-end">R$ 350,00</td>
+                                <td class="text-end text-success">+R$ 50,00</td>
+                                <td class="text-center"><i class="bi bi-check-circle text-success"></i></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-dark me-2"></span>Outros</td>
+                                <td class="text-end">R$ 200,00</td>
+                                <td class="text-end">R$ 270,00</td>
+                                <td class="text-end text-danger">-R$ 70,00</td>
+                                <td class="text-center"><i class="bi bi-exclamation-triangle text-warning"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dadosGrafico = {{ dados_grafico | tojson | safe }};
+    
+    // Gráfico de linha das categorias ao longo do tempo
+    const ctxCategorias = document.getElementById('categoriasChart').getContext('2d');
+    
+    // Preparar datasets para cada categoria
+    const datasets = dadosGrafico.categorias.map((categoria, index) => ({
+        label: categoria,
+        data: dadosGrafico.dados[categoria],
+        borderColor: dadosGrafico.cores[index],
+        backgroundColor: dadosGrafico.cores[index] + '20',
+        borderWidth: 2,
+        fill: false,
+        tension: 0.4
+    }));
+    
+    new Chart(ctxCategorias, {
+        type: 'line',
+        data: {
+            labels: dadosGrafico.labels,
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return 'R$ ' + value.toLocaleString('pt-BR');
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': R$ ' + context.parsed.y.toLocaleString('pt-BR', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            });
+                        }
+                    }
+                }
+            }
+        }
+    });
+    
+    // Gráfico de pizza para distribuição atual
+    const ctxDistribuicao = document.getElementById('distribuicaoChart').getContext('2d');
+    
+    // Pegar os valores do último mês
+    const ultimoMes = dadosGrafico.labels.length - 1;
+    const dadosUltimoMes = dadosGrafico.categorias.map(categoria => 
+        dadosGrafico.dados[categoria][ultimoMes]
+    );
+    
+    new Chart(ctxDistribuicao, {
+        type: 'doughnut',
+        data: {
+            labels: dadosGrafico.categorias,
+            datasets: [{
+                data: dadosUltimoMes,
+                backgroundColor: dadosGrafico.cores,
+                borderWidth: 2,
+                borderColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 12,
+                        padding: 15
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const percentage = ((context.parsed / total) * 100).toFixed(1);
+                            return context.label + ': R$ ' + context.parsed.toLocaleString('pt-BR', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            }) + ' (' + percentage + '%)';
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,148 @@
+<!-- Modal Nova Transação -->
+<div class="modal fade" id="modalNovaTransacao" tabindex="-1" aria-labelledby="modalNovaTransacaoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalNovaTransacaoLabel">Nova Transação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="formNovaTransacao">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="tipoTransacao" class="form-label">Tipo *</label>
+                            <select class="form-select" id="tipoTransacao" name="tipo" required>
+                                <option value="">Selecione o tipo</option>
+                                <option value="receita">Receita</option>
+                                <option value="despesa">Despesa</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="valorTransacao" class="form-label">Valor *</label>
+                            <div class="input-group">
+                                <span class="input-group-text">R$</span>
+                                <input type="number" class="form-control" id="valorTransacao" name="valor" 
+                                       step="0.01" min="0" required placeholder="0,00">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="categoriaTransacao" class="form-label">Categoria *</label>
+                            <select class="form-select" id="categoriaTransacao" name="categoria_id" required>
+                                <option value="">Carregando categorias...</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="dataTransacao" class="form-label">Data *</label>
+                            <input type="date" class="form-control" id="dataTransacao" name="data_transacao" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="descricaoTransacao" class="form-label">Descrição *</label>
+                        <input type="text" class="form-control" id="descricaoTransacao" name="descricao" 
+                               required placeholder="Ex: Supermercado, Salário, etc.">
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="recorrente" class="form-label">Recorrente</label>
+                            <select class="form-select" id="recorrente" name="recorrente">
+                                <option value="0">Não</option>
+                                <option value="1">Sim</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3" id="frequenciaContainer" style="display: none;">
+                            <label for="frequencia" class="form-label">Frequência</label>
+                            <select class="form-select" id="frequencia" name="frequencia">
+                                <option value="mensal">Mensal</option>
+                                <option value="semanal">Semanal</option>
+                                <option value="anual">Anual</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="observacoes" class="form-label">Observações</label>
+                        <textarea class="form-control" id="observacoes" name="observacoes" 
+                                  rows="3" placeholder="Informações adicionais (opcional)"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-circle"></i> Salvar Transação
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Editar Transação -->
+<div class="modal fade" id="modalEditarTransacao" tabindex="-1" aria-labelledby="modalEditarTransacaoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditarTransacaoLabel">Editar Transação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="formEditarTransacao">
+                <input type="hidden" id="editTransacaoId" name="id">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="editTipoTransacao" class="form-label">Tipo *</label>
+                            <select class="form-select" id="editTipoTransacao" name="tipo" required>
+                                <option value="">Selecione o tipo</option>
+                                <option value="receita">Receita</option>
+                                <option value="despesa">Despesa</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="editValorTransacao" class="form-label">Valor *</label>
+                            <div class="input-group">
+                                <span class="input-group-text">R$</span>
+                                <input type="number" class="form-control" id="editValorTransacao" name="valor" 
+                                       step="0.01" min="0" required placeholder="0,00">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="editCategoriaTransacao" class="form-label">Categoria *</label>
+                            <select class="form-select" id="editCategoriaTransacao" name="categoria_id" required>
+                                <option value="">Carregando categorias...</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="editDataTransacao" class="form-label">Data *</label>
+                            <input type="date" class="form-control" id="editDataTransacao" name="data_transacao" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="editDescricaoTransacao" class="form-label">Descrição *</label>
+                        <input type="text" class="form-control" id="editDescricaoTransacao" name="descricao" 
+                               required placeholder="Ex: Supermercado, Salário, etc.">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="editObservacoes" class="form-label">Observações</label>
+                        <textarea class="form-control" id="editObservacoes" name="observacoes" 
+                                  rows="3" placeholder="Informações adicionais (opcional)"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-circle"></i> Atualizar Transação
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

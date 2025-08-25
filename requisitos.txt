@@ -1,0 +1,71 @@
+Requisitos do Sistema de Finanças Pessoais - Anota-ai
+Requisitos Funcionais
+RF001 - Gerenciamento de Usuários
+O sistema deve permitir que usuários se cadastrem fornecendo nome, email, senha e confirmação de senha.
+RF002 - Autenticação de Usuários
+O sistema deve permitir que usuários façam login utilizando email e senha válidos.
+RF003 - Dashboard Principal
+O sistema deve exibir na tela inicial um gráfico empilhado mostrando receitas e despesas, além de valores totais de receita e despesa do período atual.
+RF004 - Cadastro de Despesas/Receitas
+O sistema deve permitir cadastrar despesas/receitas informando descrição, valor, data, categoria e observações opcionais.
+RF005 - Listagem de Despesas/Receitas
+O sistema deve exibir uma lista paginada de todas as despesas/receitas cadastradas pelo usuário, com opções de filtro por período e categoria.
+RF006 - Edição de Despesas/Receitas
+O sistema deve permitir editar despesas existentes, alterando qualquer um dos campos cadastrados.
+RF007 - Exclusão de Despesas/Receitas
+O sistema deve permitir excluir despesas/receitas cadastradas com confirmação do usuário.
+RF008 - Gerenciamento de Categorias
+O sistema deve permitir criar, listar, editar e excluir categorias personalizadas para classificação de despesas/despesas.
+RF009 - Relatório Diário
+O sistema deve gerar relatórios de receitas e despesas/receitas para um dia específico, com totais e detalhamento por categoria.
+
+
+
+RF010 - Relatório Semanal
+O sistema deve gerar relatórios de receitas e despesas/despesas para períodos semanais, com gráficos e comparativos.
+RF011 - Relatório Mensal
+O sistema deve gerar relatórios mensais com análises detalhadas, gráficos de tendência e comparação com meses anteriores.
+RF012 - Gerenciamento de Perfil
+O sistema deve permitir que usuários visualizem e editem suas informações pessoais como nome, email e senha.
+RF013 - Cadastro de Receitas
+O sistema deve permitir cadastrar receitas informando descrição, valor, data, categoria e observações opcionais.
+RF014 - Filtros e Pesquisa
+O sistema deve permitir filtrar despesas e receitas por período, categoria, valor mínimo/máximo e descrição.
+RF015 - Exportação de Dados
+O sistema deve permitir exportar relatórios em formato PDF.
+RF016 - Dicas Financeiras
+O sistema deve exibir dicas personalizadas de educação financeira baseadas nos padrões de gastos do usuário.
+RF017 - Categorias Padrão
+O sistema deve fornecer categorias pré-definidas (Alimentação, Transporte, Lazer, etc.) que o usuário pode utilizar.
+RF018 - Metas Financeiras
+O sistema deve permitir definir metas de gastos por categoria e alertar quando próximo do limite.
+RF019 - Backup de Dados
+O sistema deve permitir fazer backup e restauração dos dados financeiros do usuário.
+
+
+RF020 - Notificações
+O sistema deve enviar notificações sobre metas atingidas, lembretes de cadastro de gastos e resumos periódicos.
+
+Requisitos Não Funcionais
+RNF001 - Performance
+O sistema deve carregar as páginas principais em no máximo 3 segundos em conexões de banda larga.
+RNF002 - Segurança
+O sistema deve criptografar senhas usando algoritmos seguros (bcrypt) e implementar proteção contra ataques CSRF e XSS.
+RNF003 - Usabilidade
+O sistema deve ter interface responsiva que funcione adequadamente em dispositivos desktop, tablet e mobile.
+RNF004 - Disponibilidade
+O sistema deve estar disponível 99% do tempo, com janelas de manutenção programadas fora do horário comercial.
+RNF005 - Escalabilidade
+O sistema deve suportar mais de 10 usuários simultâneos sem degradação significativa de performance.
+RNF006 - Compatibilidade
+O sistema deve funcionar nos principais navegadores (Chrome, Firefox, Safari, Edge) nas versões mais recentes.
+RNF007 - Backup e Recuperação
+O sistema deve realizar backup automático diário dos dados e permitir recuperação em caso de falhas.
+RNF008 - Privacidade
+O sistema deve garantir que dados financeiros de um usuário não sejam acessíveis por outros usuários.
+
+
+RNF009 - Manutenibilidade
+O código do sistema deve seguir padrões de desenvolvimento limpo e estar adequadamente documentado para facilitar manutenção.
+RNF010 - Portabilidade
+O sistema deve ser desenvolvido de forma a funcionar em diferentes sistemas operacionais (Windows, Linux, macOS) onde Python/Flask são suportados.

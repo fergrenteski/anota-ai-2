@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Anota-ai{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3 mb-0">Dashboard</h1>
+            <div>
+                <button class="btn btn-primary" data-action="nova-transacao">
+                    <i class="bi bi-plus-circle"></i> Nova Transação
+                </button>
+                <button class="btn btn-outline-secondary ms-2" data-action="refresh">
+                    <i class="bi bi-arrow-clockwise"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cards de Resumo -->
+<div class="row mb-4">
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card h-100" data-card="receitas" data-loading>
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <div class="bg-success bg-opacity-10 rounded-circle p-3">
+                            <i class="bi bi-arrow-up-circle text-success fs-4"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="text-muted small">Receitas do Mês</div>
+                        <div class="fs-5 fw-bold text-success">R$ 0,00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card h-100" data-card="despesas" data-loading>
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <div class="bg-danger bg-opacity-10 rounded-circle p-3">
+                            <i class="bi bi-arrow-down-circle text-danger fs-4"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="text-muted small">Despesas do Mês</div>
+                        <div class="fs-5 fw-bold text-danger">R$ 0,00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card h-100" data-card="saldo" data-loading>
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <div class="bg-primary bg-opacity-10 rounded-circle p-3">
+                            <i class="bi bi-wallet2 text-primary fs-4"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="text-muted small">Saldo Atual</div>
+                        <div class="fs-5 fw-bold text-primary">R$ 0,00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card h-100" data-card="economia" data-loading>
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <div class="bg-info bg-opacity-10 rounded-circle p-3">
+                            <i class="bi bi-graph-up text-info fs-4"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="text-muted small">Economia</div>
+                        <div class="fs-5 fw-bold text-info">R$ 0,00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Gráficos e Tabelas -->
+<div class="row">
+    <div class="col-lg-8 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Fluxo de Caixa - Últimos 6 Meses</h5>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-three-dots"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Exportar PDF</a></li>
+                        <li><a class="dropdown-item" href="#">Exportar Excel</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-body">
+                <canvas id="fluxoCaixaChart" style="height: 300px;"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Categorias mais gastas</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="flex-shrink-0">
+                        <div class="bg-danger bg-opacity-10 rounded p-2">
+                            <i class="bi bi-house text-danger"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="fw-semibold">Moradia</div>
+                        <div class="text-muted small">R$ 1.200,00</div>
+                    </div>
+                    <div class="text-end">
+                        <div class="text-danger">37.7%</div>
+                    </div>
+                </div>
+                
+                <div class="d-flex align-items-center mb-3">
+                    <div class="flex-shrink-0">
+                        <div class="bg-warning bg-opacity-10 rounded p-2">
+                            <i class="bi bi-cart text-warning"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="fw-semibold">Alimentação</div>
+                        <div class="text-muted small">R$ 800,00</div>
+                    </div>
+                    <div class="text-end">
+                        <div class="text-warning">25.2%</div>
+                    </div>
+                </div>
+                
+                <div class="d-flex align-items-center mb-3">
+                    <div class="flex-shrink-0">
+                        <div class="bg-info bg-opacity-10 rounded p-2">
+                            <i class="bi bi-car-front text-info"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="fw-semibold">Transporte</div>
+                        <div class="text-muted small">R$ 450,00</div>
+                    </div>
+                    <div class="text-end">
+                        <div class="text-info">14.2%</div>
+                    </div>
+                </div>
+                
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <div class="bg-secondary bg-opacity-10 rounded p-2">
+                            <i class="bi bi-three-dots text-secondary"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="fw-semibold">Outros</div>
+                        <div class="text-muted small">R$ 730,00</div>
+                    </div>
+                    <div class="text-end">
+                        <div class="text-secondary">22.9%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Transações Recentes -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Transações Recentes</h5>
+                <a href="{{ url_for('main.despesas_receitas') }}" class="btn btn-outline-primary btn-sm">
+                    Ver todas <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table id="transacoes-recentes" class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Descrição</th>
+                                <th>Valor</th>
+                                <th>Data</th>
+                                <th>Tipo</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dados carregados via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Incluir modais -->
+{% include 'modals/transacao.html' %}
+
+{% endblock %}
+
+{% block extra_js %}
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Transaction management -->
+<script src="{{ url_for('static', filename='js/transactions.js') }}"></script>
+<!-- Dashboard specific JavaScript -->
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

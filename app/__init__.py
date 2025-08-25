@@ -1,24 +1,48 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from flask_login import LoginManager
-from config.settings import Config
 
-db = SQLAlchemy()
-migrate = Migrate()
 login_manager = LoginManager()
 
-def create_app(config_class=Config):
+# ===== USUÁRIO FICTÍCIO =====
+class UsuarioFicticio:
+    def __init__(self, id, email, nome):
+        self.id = id
+        self.email = email
+        self.nome = nome
+        self.is_authenticated = True
+        self.is_active = True
+        self.is_anonymous = False
+    
+    def get_id(self):
+        return str(self.id)
+
+# Usuário demo para login
+USUARIO_DEMO = UsuarioFicticio(1, 'demo@anotaai.com', 'Usuário Demo')
+
+def create_app():
     app = Flask(__name__)
-    app.config.from_object(config_class)
-
-    # Initialize extensions
-    db.init_app(app)
-    migrate.init_app(app, db)
+    
+    # Configuração mínima necessária
+    app.config['SECRET_KEY'] = 'demo-secret-key-ficticio'
+    app.config['WTF_CSRF_ENABLED'] = False
+    
+    # Configure Flask-Login
     login_manager.init_app(app)
-    login_manager.login_view = 'auth.login'
-    login_manager.login_message = 'Por favor, faça login para acessar esta página.'
+    login_manager.login_view = 'main.login'
+    login_manager.login_message = 'Faça login para acessar esta página.'
+    login_manager.login_message_category = 'info'
+    
+    @login_manager.user_loader
+    def load_user(user_id):
+        if user_id == '1':
+            return USUARIO_DEMO
+        return None
 
-    app.route('/')(lambda: "Hello Word!")
+    # Register blueprints
+    from app.routes import main_bp
+    from app.routes.dashboard_api import dashboard_api
+    
+    app.register_blueprint(main_bp)
+    app.register_blueprint(dashboard_api)
 
     return app

@@ -1,0 +1,312 @@
+{% extends "base.html" %}
+
+{% block title %}Relatório Diário - Anota-ai{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3 mb-0">Relatório Diário</h1>
+            <div>
+                <button class="btn btn-outline-primary me-2">
+                    <i class="bi bi-download"></i> Exportar PDF
+                </button>
+                <button class="btn btn-primary">
+                    <i class="bi bi-arrow-clockwise"></i> Atualizar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cards de Resumo Diário -->
+<div class="row mb-4">
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <div class="bg-primary bg-opacity-10 rounded-circle p-2">
+                            <i class="bi bi-calendar-day text-primary fs-5"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="text-muted small">Período</div>
+                        <div class="fw-bold">Últimos 7 Dias</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <div class="bg-success bg-opacity-10 rounded-circle p-2">
+                            <i class="bi bi-arrow-up-circle text-success fs-5"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="text-muted small">Total Receitas</div>
+                        <div class="fw-bold text-success">R$ 450,00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <div class="bg-danger bg-opacity-10 rounded-circle p-2">
+                            <i class="bi bi-arrow-down-circle text-danger fs-5"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="text-muted small">Total Despesas</div>
+                        <div class="fw-bold text-danger">R$ 320,00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <div class="bg-info bg-opacity-10 rounded-circle p-2">
+                            <i class="bi bi-calculator text-info fs-5"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="text-muted small">Resultado</div>
+                        <div class="fw-bold text-info">R$ 130,00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Gráfico de Categorias -->
+<div class="row">
+    <div class="col-lg-8 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Despesas por Categoria - Últimos 7 Dias</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="categoriasChart" style="height: 400px;"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">Distribuição Hoje</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="distribuicaoChart" style="height: 300px;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tabela de Transações -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Gastos por Dia</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Data</th>
+                                <th>Dia da Semana</th>
+                                <th class="text-end">Receitas</th>
+                                <th class="text-end">Despesas</th>
+                                <th class="text-end">Resultado</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>18/08/2025</td>
+                                <td><span class="badge bg-primary">Domingo</span></td>
+                                <td class="text-end text-success">R$ 0,00</td>
+                                <td class="text-end text-danger">R$ 35,00</td>
+                                <td class="text-end text-danger">-R$ 35,00</td>
+                                <td class="text-center"><i class="bi bi-dash-circle text-danger"></i></td>
+                            </tr>
+                            <tr>
+                                <td>17/08/2025</td>
+                                <td><span class="badge bg-secondary">Sábado</span></td>
+                                <td class="text-end text-success">R$ 0,00</td>
+                                <td class="text-end text-danger">R$ 120,00</td>
+                                <td class="text-end text-danger">-R$ 120,00</td>
+                                <td class="text-center"><i class="bi bi-dash-circle text-danger"></i></td>
+                            </tr>
+                            <tr>
+                                <td>16/08/2025</td>
+                                <td><span class="badge bg-info">Sexta</span></td>
+                                <td class="text-end text-success">R$ 400,00</td>
+                                <td class="text-end text-danger">R$ 90,00</td>
+                                <td class="text-end text-success">+R$ 310,00</td>
+                                <td class="text-center"><i class="bi bi-check-circle text-success"></i></td>
+                            </tr>
+                            <tr>
+                                <td>15/08/2025</td>
+                                <td><span class="badge bg-warning">Quinta</span></td>
+                                <td class="text-end text-success">R$ 0,00</td>
+                                <td class="text-end text-danger">R$ 22,00</td>
+                                <td class="text-end text-danger">-R$ 22,00</td>
+                                <td class="text-center"><i class="bi bi-dash-circle text-danger"></i></td>
+                            </tr>
+                            <tr>
+                                <td>14/08/2025</td>
+                                <td><span class="badge bg-success">Quarta</span></td>
+                                <td class="text-end text-success">R$ 50,00</td>
+                                <td class="text-end text-danger">R$ 40,00</td>
+                                <td class="text-end text-success">+R$ 10,00</td>
+                                <td class="text-center"><i class="bi bi-check-circle text-success"></i></td>
+                            </tr>
+                            <tr>
+                                <td>13/08/2025</td>
+                                <td><span class="badge bg-dark">Terça</span></td>
+                                <td class="text-end text-success">R$ 0,00</td>
+                                <td class="text-end text-danger">R$ 8,00</td>
+                                <td class="text-end text-danger">-R$ 8,00</td>
+                                <td class="text-center"><i class="bi bi-dash-circle text-danger"></i></td>
+                            </tr>
+                            <tr>
+                                <td>12/08/2025</td>
+                                <td><span class="badge bg-light text-dark">Segunda</span></td>
+                                <td class="text-end text-success">R$ 0,00</td>
+                                <td class="text-end text-danger">R$ 5,00</td>
+                                <td class="text-end text-danger">-R$ 5,00</td>
+                                <td class="text-center"><i class="bi bi-dash-circle text-danger"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dadosGrafico = {{ dados_grafico | tojson | safe }};
+    
+    // Gráfico de linha das categorias ao longo dos dias
+    const ctxCategorias = document.getElementById('categoriasChart').getContext('2d');
+    
+    // Preparar datasets para cada categoria
+    const datasets = dadosGrafico.categorias.map((categoria, index) => ({
+        label: categoria,
+        data: dadosGrafico.dados[categoria],
+        borderColor: dadosGrafico.cores[index],
+        backgroundColor: dadosGrafico.cores[index] + '20',
+        borderWidth: 2,
+        fill: false,
+        tension: 0.4
+    }));
+    
+    new Chart(ctxCategorias, {
+        type: 'line',
+        data: {
+            labels: dadosGrafico.labels,
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return 'R$ ' + value.toLocaleString('pt-BR');
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': R$ ' + context.parsed.y.toLocaleString('pt-BR', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            });
+                        }
+                    }
+                }
+            }
+        }
+    });
+    
+    // Gráfico de pizza para distribuição do dia atual
+    const ctxDistribuicao = document.getElementById('distribuicaoChart').getContext('2d');
+    
+    // Pegar os valores do último dia (hoje)
+    const ultimoDia = dadosGrafico.labels.length - 1;
+    const dadosUltimoDia = dadosGrafico.categorias.map(categoria => 
+        dadosGrafico.dados[categoria][ultimoDia]
+    );
+    
+    new Chart(ctxDistribuicao, {
+        type: 'doughnut',
+        data: {
+            labels: dadosGrafico.categorias,
+            datasets: [{
+                data: dadosUltimoDia,
+                backgroundColor: dadosGrafico.cores,
+                borderWidth: 2,
+                borderColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 12,
+                        padding: 15
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const percentage = ((context.parsed / total) * 100).toFixed(1);
+                            return context.label + ': R$ ' + context.parsed.toLocaleString('pt-BR', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            }) + ' (' + percentage + '%)';
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}
