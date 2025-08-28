@@ -2,28 +2,633 @@
 
 {% block title %}Categorias - Anota-ai{% endblock %}
 
+{% block extra_css %}
+<link href="{{ url_for('static', filename='css/categorias.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-<div class="row">
+<!-- Page Header -->
+<div class="row mb-4">
     <div class="col-12">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3 mb-0">Categorias</h1>
-            <button class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> Nova Categoria
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="h3 mb-2">Categorias</h1>
+                <p class="text-muted mb-0">Organize suas transações por categorias</p>
+            </div>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#novaCategoriaModal">
+                <i class="bi bi-plus-circle me-2"></i>Nova Categoria
             </button>
         </div>
     </div>
 </div>
 
+<!-- Statistics Cards -->
+<div class="stats-card">
+    <div class="row text-center">
+        <div class="col-md-3 col-6">
+            <div class="stats-number">12</div>
+            <p class="stats-label">Total de Categorias</p>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="stats-number">8</div>
+            <p class="stats-label">Categorias Ativas</p>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="stats-number">R$ 4.567</div>
+            <p class="stats-label">Gasto Total</p>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="stats-number">R$ 2.890</div>
+            <p class="stats-label">Receita Total</p>
+        </div>
+    </div>
+</div>
+
+<!-- Search and Filter -->
+<div class="row mb-4">
+    <div class="col-md-8">
+        <div class="search-container">
+            <i class="bi bi-search search-icon"></i>
+            <input type="text" class="form-control search-input" placeholder="Buscar categorias...">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <select class="form-select">
+            <option selected>Todas as Categorias</option>
+            <option>Despesas</option>
+            <option>Receitas</option>
+            <option>Ativas</option>
+            <option>Inativas</option>
+        </select>
+    </div>
+</div>
+
+<!-- Filter Tabs -->
+<div class="filter-tabs mb-4">
+    <button class="filter-tab active" data-filter="all">Todas</button>
+    <button class="filter-tab" data-filter="despesas">Despesas</button>
+    <button class="filter-tab" data-filter="receitas">Receitas</button>
+    <button class="filter-tab" data-filter="frequentes">Mais Usadas</button>
+</div>
+
+<!-- Categories Grid -->
 <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">Gerenciar Categorias</h5>
+    <!-- Alimentação -->
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card category-card h-100" data-category="despesas">
+            <div class="card-body position-relative">
+                <div class="category-actions">
+                    <button class="action-btn btn-edit" title="Editar">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="action-btn btn-delete" title="Excluir">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+                
+                <div class="category-icon category-alimentacao">
+                    <i class="bi bi-shop"></i>
+                </div>
+                <h5 class="card-title">Alimentação</h5>
+                <p class="category-stats">47 transações este mês</p>
+                <div class="category-amount">R$ 892,50</div>
+                <span class="category-trend trend-up">
+                    <i class="bi bi-arrow-up"></i> +15%
+                </span>
+                
+                <div class="category-progress">
+                    <div class="progress-bar bg-danger" style="width: 75%"></div>
+                </div>
+                <small class="text-muted">75% do orçamento (R$ 1.200)</small>
             </div>
-            <div class="card-body">
-                <p class="text-muted">Esta página será desenvolvida para gerenciar categorias de transações.</p>
+        </div>
+    </div>
+
+    <!-- Transporte -->
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card category-card h-100" data-category="despesas">
+            <div class="card-body position-relative">
+                <div class="category-actions">
+                    <button class="action-btn btn-edit" title="Editar">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="action-btn btn-delete" title="Excluir">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+                
+                <div class="category-icon category-transporte">
+                    <i class="bi bi-car-front"></i>
+                </div>
+                <h5 class="card-title">Transporte</h5>
+                <p class="category-stats">23 transações este mês</p>
+                <div class="category-amount">R$ 456,80</div>
+                <span class="category-trend trend-down">
+                    <i class="bi bi-arrow-down"></i> -8%
+                </span>
+                
+                <div class="category-progress">
+                    <div class="progress-bar bg-info" style="width: 52%"></div>
+                </div>
+                <small class="text-muted">52% do orçamento (R$ 880)</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Moradia -->
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card category-card h-100" data-category="despesas">
+            <div class="card-body position-relative">
+                <div class="category-actions">
+                    <button class="action-btn btn-edit" title="Editar">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="action-btn btn-delete" title="Excluir">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+                
+                <div class="category-icon category-moradia">
+                    <i class="bi bi-house-door"></i>
+                </div>
+                <h5 class="card-title">Moradia</h5>
+                <p class="category-stats">8 transações este mês</p>
+                <div class="category-amount">R$ 1.850,00</div>
+                <span class="category-trend trend-stable">
+                    <i class="bi bi-dash"></i> 0%
+                </span>
+                
+                <div class="category-progress">
+                    <div class="progress-bar bg-primary" style="width: 93%"></div>
+                </div>
+                <small class="text-muted">93% do orçamento (R$ 2.000)</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Saúde -->
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card category-card h-100" data-category="despesas">
+            <div class="card-body position-relative">
+                <div class="category-actions">
+                    <button class="action-btn btn-edit" title="Editar">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="action-btn btn-delete" title="Excluir">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+                
+                <div class="category-icon category-saude">
+                    <i class="bi bi-heart-pulse"></i>
+                </div>
+                <h5 class="card-title">Saúde</h5>
+                <p class="category-stats">12 transações este mês</p>
+                <div class="category-amount">R$ 324,90</div>
+                <span class="category-trend trend-up">
+                    <i class="bi bi-arrow-up"></i> +22%
+                </span>
+                
+                <div class="category-progress">
+                    <div class="progress-bar bg-success" style="width: 43%"></div>
+                </div>
+                <small class="text-muted">43% do orçamento (R$ 750)</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Educação -->
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card category-card h-100" data-category="despesas">
+            <div class="card-body position-relative">
+                <div class="category-actions">
+                    <button class="action-btn btn-edit" title="Editar">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="action-btn btn-delete" title="Excluir">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+                
+                <div class="category-icon category-educacao">
+                    <i class="bi bi-book"></i>
+                </div>
+                <h5 class="card-title">Educação</h5>
+                <p class="category-stats">6 transações este mês</p>
+                <div class="category-amount">R$ 567,30</div>
+                <span class="category-trend trend-down">
+                    <i class="bi bi-arrow-down"></i> -5%
+                </span>
+                
+                <div class="category-progress">
+                    <div class="progress-bar bg-warning" style="width: 71%"></div>
+                </div>
+                <small class="text-muted">71% do orçamento (R$ 800)</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lazer -->
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card category-card h-100" data-category="despesas">
+            <div class="card-body position-relative">
+                <div class="category-actions">
+                    <button class="action-btn btn-edit" title="Editar">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="action-btn btn-delete" title="Excluir">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+                
+                <div class="category-icon category-lazer">
+                    <i class="bi bi-controller"></i>
+                </div>
+                <h5 class="card-title">Lazer</h5>
+                <p class="category-stats">18 transações este mês</p>
+                <div class="category-amount">R$ 278,45</div>
+                <span class="category-trend trend-up">
+                    <i class="bi bi-arrow-up"></i> +12%
+                </span>
+                
+                <div class="category-progress">
+                    <div class="progress-bar bg-info" style="width: 46%"></div>
+                </div>
+                <small class="text-muted">46% do orçamento (R$ 600)</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vestuário -->
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card category-card h-100" data-category="despesas">
+            <div class="card-body position-relative">
+                <div class="category-actions">
+                    <button class="action-btn btn-edit" title="Editar">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="action-btn btn-delete" title="Excluir">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+                
+                <div class="category-icon category-vestuario">
+                    <i class="bi bi-bag"></i>
+                </div>
+                <h5 class="card-title">Vestuário</h5>
+                <p class="category-stats">9 transações este mês</p>
+                <div class="category-amount">R$ 445,60</div>
+                <span class="category-trend trend-stable">
+                    <i class="bi bi-dash"></i> 0%
+                </span>
+                
+                <div class="category-progress">
+                    <div class="progress-bar bg-secondary" style="width: 89%"></div>
+                </div>
+                <small class="text-muted">89% do orçamento (R$ 500)</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tecnologia -->
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card category-card h-100" data-category="despesas">
+            <div class="card-body position-relative">
+                <div class="category-actions">
+                    <button class="action-btn btn-edit" title="Editar">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="action-btn btn-delete" title="Excluir">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+                
+                <div class="category-icon category-tecnologia">
+                    <i class="bi bi-laptop"></i>
+                </div>
+                <h5 class="card-title">Tecnologia</h5>
+                <p class="category-stats">4 transações este mês</p>
+                <div class="category-amount">R$ 189,90</div>
+                <span class="category-trend trend-down">
+                    <i class="bi bi-arrow-down"></i> -15%
+                </span>
+                
+                <div class="category-progress">
+                    <div class="progress-bar bg-dark" style="width: 38%"></div>
+                </div>
+                <small class="text-muted">38% do orçamento (R$ 500)</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Salário (Receita) -->
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card category-card h-100" data-category="receitas">
+            <div class="card-body position-relative">
+                <div class="category-actions">
+                    <button class="action-btn btn-edit" title="Editar">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="action-btn btn-delete" title="Excluir">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+                
+                <div class="category-icon category-receita">
+                    <i class="bi bi-cash-coin"></i>
+                </div>
+                <h5 class="card-title">Salário</h5>
+                <p class="category-stats">1 transação este mês</p>
+                <div class="category-amount text-success">R$ 4.500,00</div>
+                <span class="category-trend trend-stable">
+                    <i class="bi bi-dash"></i> 0%
+                </span>
+                
+                <div class="category-progress">
+                    <div class="progress-bar bg-success" style="width: 100%"></div>
+                </div>
+                <small class="text-success">Receita principal</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Freelance (Receita) -->
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card category-card h-100" data-category="receitas">
+            <div class="card-body position-relative">
+                <div class="category-actions">
+                    <button class="action-btn btn-edit" title="Editar">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="action-btn btn-delete" title="Excluir">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+                
+                <div class="category-icon category-receita">
+                    <i class="bi bi-briefcase"></i>
+                </div>
+                <h5 class="card-title">Freelance</h5>
+                <p class="category-stats">3 transações este mês</p>
+                <div class="category-amount text-success">R$ 1.200,00</div>
+                <span class="category-trend trend-up">
+                    <i class="bi bi-arrow-up"></i> +25%
+                </span>
+                
+                <div class="category-progress">
+                    <div class="progress-bar bg-success" style="width: 60%"></div>
+                </div>
+                <small class="text-success">Receita extra</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Investimentos (Receita) -->
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card category-card h-100" data-category="receitas">
+            <div class="card-body position-relative">
+                <div class="category-actions">
+                    <button class="action-btn btn-edit" title="Editar">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="action-btn btn-delete" title="Excluir">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+                
+                <div class="category-icon category-investimentos">
+                    <i class="bi bi-graph-up-arrow"></i>
+                </div>
+                <h5 class="card-title">Investimentos</h5>
+                <p class="category-stats">2 transações este mês</p>
+                <div class="category-amount text-success">R$ 189,50</div>
+                <span class="category-trend trend-up">
+                    <i class="bi bi-arrow-up"></i> +8%
+                </span>
+                
+                <div class="category-progress">
+                    <div class="progress-bar bg-success" style="width: 19%"></div>
+                </div>
+                <small class="text-success">Rendimentos</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Add Category -->
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="quick-add-category h-100 d-flex align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#novaCategoriaModal">
+            <div>
+                <div class="quick-add-icon">
+                    <i class="bi bi-plus"></i>
+                </div>
+                <h5 class="mb-0">Nova Categoria</h5>
+                <p class="text-muted mb-0">Adicionar categoria</p>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal Nova Categoria -->
+<div class="modal fade" id="novaCategoriaModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nova Categoria</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="text-center mb-4">
+                        <div class="modal-category-icon category-outros">
+                            <i class="bi bi-tag" id="categoria-icon-preview"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Nome da Categoria</label>
+                        <input type="text" class="form-control" placeholder="Ex: Supermercado">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Tipo</label>
+                        <select class="form-select">
+                            <option value="despesa">Despesa</option>
+                            <option value="receita">Receita</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Ícone</label>
+                        <div class="row">
+                            <div class="col-2 mb-2">
+                                <button type="button" class="btn btn-outline-secondary w-100 icon-selector" data-icon="bi-shop">
+                                    <i class="bi bi-shop"></i>
+                                </button>
+                            </div>
+                            <div class="col-2 mb-2">
+                                <button type="button" class="btn btn-outline-secondary w-100 icon-selector" data-icon="bi-car-front">
+                                    <i class="bi bi-car-front"></i>
+                                </button>
+                            </div>
+                            <div class="col-2 mb-2">
+                                <button type="button" class="btn btn-outline-secondary w-100 icon-selector" data-icon="bi-house-door">
+                                    <i class="bi bi-house-door"></i>
+                                </button>
+                            </div>
+                            <div class="col-2 mb-2">
+                                <button type="button" class="btn btn-outline-secondary w-100 icon-selector" data-icon="bi-heart-pulse">
+                                    <i class="bi bi-heart-pulse"></i>
+                                </button>
+                            </div>
+                            <div class="col-2 mb-2">
+                                <button type="button" class="btn btn-outline-secondary w-100 icon-selector" data-icon="bi-book">
+                                    <i class="bi bi-book"></i>
+                                </button>
+                            </div>
+                            <div class="col-2 mb-2">
+                                <button type="button" class="btn btn-outline-secondary w-100 icon-selector" data-icon="bi-controller">
+                                    <i class="bi bi-controller"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Cor</label>
+                        <input type="color" class="form-control form-control-color" value="#4a90e2">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Orçamento Mensal (Opcional)</label>
+                        <div class="input-group">
+                            <span class="input-group-text">R$</span>
+                            <input type="number" class="form-control" placeholder="0,00">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Criar Categoria</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Filter functionality
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const categoryCards = document.querySelectorAll('.category-card');
+    
+    filterTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Update active tab
+            filterTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            const filter = this.dataset.filter;
+            
+            // Filter categories
+            categoryCards.forEach(card => {
+                if (filter === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    const category = card.dataset.category;
+                    if (category === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        });
+    });
+    
+    // Search functionality
+    const searchInput = document.querySelector('.search-input');
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        
+        categoryCards.forEach(card => {
+            const title = card.querySelector('.card-title').textContent.toLowerCase();
+            if (title.includes(searchTerm)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+    
+    // Icon selector in modal
+    const iconSelectors = document.querySelectorAll('.icon-selector');
+    const iconPreview = document.getElementById('categoria-icon-preview');
+    
+    iconSelectors.forEach(selector => {
+        selector.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Update active selector
+            iconSelectors.forEach(s => s.classList.remove('btn-primary', 'active'));
+            iconSelectors.forEach(s => s.classList.add('btn-outline-secondary'));
+            
+            this.classList.remove('btn-outline-secondary');
+            this.classList.add('btn-primary', 'active');
+            
+            // Update preview
+            const iconClass = this.dataset.icon;
+            iconPreview.className = `bi ${iconClass}`;
+        });
+    });
+    
+    // Action buttons
+    const editButtons = document.querySelectorAll('.btn-edit');
+    const deleteButtons = document.querySelectorAll('.btn-delete');
+    
+    editButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const categoryName = this.closest('.category-card').querySelector('.card-title').textContent;
+            console.log(`Editando categoria: ${categoryName}`);
+        });
+    });
+    
+    deleteButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const categoryName = this.closest('.category-card').querySelector('.card-title').textContent;
+            if (confirm(`Tem certeza que deseja excluir a categoria "${categoryName}"?`)) {
+                this.closest('.category-card').style.display = 'none';
+                console.log(`Categoria "${categoryName}" excluída`);
+            }
+        });
+    });
+    
+    // Category card click
+    categoryCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const categoryName = this.querySelector('.card-title').textContent;
+            console.log(`Visualizando categoria: ${categoryName}`);
+        });
+    });
+    
+    // Modal form submission
+    const createButton = document.querySelector('#novaCategoriaModal .btn-primary');
+    createButton.addEventListener('click', function() {
+        const categoryName = document.querySelector('#novaCategoriaModal input[type="text"]').value;
+        if (categoryName.trim()) {
+            console.log(`Nova categoria criada: ${categoryName}`);
+            
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('novaCategoriaModal'));
+            modal.hide();
+            
+            // Reset form
+            document.querySelector('#novaCategoriaModal form').reset();
+        }
+    });
+});
+</script>
 {% endblock %}

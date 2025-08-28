@@ -2,23 +2,376 @@
 
 {% block title %}Perfil - Anota-ai{% endblock %}
 
-{% block content %}
-<div class="row">
-    <div class="col-12">
-        <h1 class="h3 mb-4">Meu Perfil</h1>
-    </div>
-</div>
+{% block extra_css %}
+<link href="{{ url_for('static', filename='css/perfil.css') }}" rel="stylesheet">
+{% endblock %}
 
-<div class="row">
+{% block content %}
+<!-- Profile Header -->
+<div class="row mb-4">
     <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">Informações do Perfil</h5>
-            </div>
-            <div class="card-body">
-                <p class="text-muted">Esta página será desenvolvida para gerenciar o perfil do usuário.</p>
+        <div class="card profile-stats">
+            <div class="card-body py-4">
+                <div class="row align-items-center">
+                    <div class="col-md-3 text-center">
+                        <img src="{{ url_for('static', filename='images/default-avatar.svg') }}" 
+                             alt="Avatar" class="rounded-circle profile-avatar mb-3">
+                        <h4 class="mb-1">Maria Silva</h4>
+                        <p class="mb-0 opacity-75">Usuária Premium</p>
+                        <span class="badge badge-level mt-2">
+                            <i class="bi bi-star-fill"></i> Nível Ouro
+                        </span>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-3 mb-3">
+                                <div class="stat-card rounded p-3 text-center">
+                                    <i class="bi bi-calendar-check fs-2 mb-2"></i>
+                                    <h5 class="mb-1">142</h5>
+                                    <small class="opacity-75">Dias ativos</small>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3 mb-3">
+                                <div class="stat-card rounded p-3 text-center">
+                                    <i class="bi bi-receipt fs-2 mb-2"></i>
+                                    <h5 class="mb-1">1,247</h5>
+                                    <small class="opacity-75">Transações</small>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3 mb-3">
+                                <div class="stat-card rounded p-3 text-center">
+                                    <i class="bi bi-piggy-bank fs-2 mb-2"></i>
+                                    <h5 class="mb-1">R$ 12.450</h5>
+                                    <small class="opacity-75">Economizado</small>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3 mb-3">
+                                <div class="stat-card rounded p-3 text-center">
+                                    <i class="bi bi-trophy fs-2 mb-2"></i>
+                                    <h5 class="mb-1">8</h5>
+                                    <small class="opacity-75">Metas atingidas</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Profile Content -->
+<div class="row">
+    <!-- Personal Information -->
+    <div class="col-lg-8">
+        <div class="card mb-4 profile-info-card">
+            <div class="card-header d-flex justify-content-between align-items-center profile-section-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-person-fill text-primary me-2"></i>
+                    Informações Pessoais
+                </h5>
+                <button class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-pencil"></i> Editar
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Nome Completo</label>
+                        <p class="h6 mb-0">Maria Fernanda Silva Santos</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Email</label>
+                        <p class="h6 mb-0">maria.silva@email.com</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Telefone</label>
+                        <p class="h6 mb-0">(11) 99999-8888</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Data de Nascimento</label>
+                        <p class="h6 mb-0">15/03/1990</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">CPF</label>
+                        <p class="h6 mb-0">123.456.789-00</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Membro desde</label>
+                        <p class="h6 mb-0">Janeiro de 2024</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Preferences -->
+        <div class="card mb-4 profile-info-card">
+            <div class="card-header profile-section-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-gear-fill text-primary me-2"></i>
+                    Preferências Financeiras
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Moeda Principal</label>
+                        <select class="form-select">
+                            <option selected>Real Brasileiro (BRL)</option>
+                            <option>Dólar Americano (USD)</option>
+                            <option>Euro (EUR)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Limite de Gastos Mensais</label>
+                        <div class="input-group">
+                            <span class="input-group-text">R$</span>
+                            <input type="text" class="form-control" value="3.500,00">
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Meta de Economia Mensal</label>
+                        <div class="input-group">
+                            <span class="input-group-text">R$</span>
+                            <input type="text" class="form-control" value="800,00">
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Dia de Fechamento</label>
+                        <select class="form-select">
+                            <option>5 do mês</option>
+                            <option selected>10 do mês</option>
+                            <option>15 do mês</option>
+                            <option>20 do mês</option>
+                            <option>25 do mês</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="card profile-info-card">
+            <div class="card-header profile-section-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-clock-history text-primary me-2"></i>
+                    Atividade Recente
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="activity-item mb-3">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="mb-1">Meta de economia atingida</h6>
+                            <p class="text-muted mb-0 small">Você economizou R$ 850,00 este mês</p>
+                        </div>
+                        <small class="text-muted">2 horas atrás</small>
+                    </div>
+                </div>
+                <div class="activity-item mb-3">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="mb-1">Nova transação adicionada</h6>
+                            <p class="text-muted mb-0 small">Supermercado - R$ 85,50</p>
+                        </div>
+                        <small class="text-muted">1 dia atrás</small>
+                    </div>
+                </div>
+                <div class="activity-item mb-3">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="mb-1">Relatório mensal gerado</h6>
+                            <p class="text-muted mb-0 small">Relatório de julho disponível</p>
+                        </div>
+                        <small class="text-muted">3 dias atrás</small>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="mb-1">Categoria criada</h6>
+                            <p class="text-muted mb-0 small">Nova categoria: "Investimentos"</p>
+                        </div>
+                        <small class="text-muted">1 semana atrás</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+        <!-- Notifications Settings -->
+        <div class="card mb-4 profile-info-card">
+            <div class="card-header profile-section-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-bell-fill text-primary me-2"></i>
+                    Notificações
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h6 class="mb-1">Email</h6>
+                        <small class="text-muted">Receber por email</small>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" checked>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h6 class="mb-1">Push</h6>
+                        <small class="text-muted">Notificações push</small>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" checked>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h6 class="mb-1">Lembretes</h6>
+                        <small class="text-muted">Lembrar de registrar gastos</small>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" checked>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-1">Relatórios</h6>
+                        <small class="text-muted">Relatórios automáticos</small>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Achievements -->
+        <div class="card mb-4 profile-info-card">
+            <div class="card-header profile-section-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-award-fill text-primary me-2"></i>
+                    Conquistas
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-3 achievement-item completed">
+                    <div class="achievement-icon bg-success text-white me-3">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1">Primeiro Passo</h6>
+                        <small class="text-muted">Primeira transação registrada</small>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-3 achievement-item completed">
+                    <div class="achievement-icon bg-warning text-white me-3">
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1">Economizador</h6>
+                        <small class="text-muted">Meta de economia atingida</small>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-3 achievement-item completed">
+                    <div class="achievement-icon bg-info text-white me-3">
+                        <i class="bi bi-calendar-check"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1">Consistente</h6>
+                        <small class="text-muted">30 dias consecutivos</small>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center achievement-item locked">
+                    <div class="achievement-icon bg-secondary text-white me-3">
+                        <i class="bi bi-lock"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1 text-muted">Organizador</h6>
+                        <small class="text-muted">10 categorias criadas</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card profile-info-card">
+            <div class="card-header profile-section-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-lightning-fill text-primary me-2"></i>
+                    Ações Rápidas
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-outline-primary quick-action-btn">
+                        <i class="bi bi-download me-2"></i>
+                        Exportar Dados
+                    </button>
+                    <button class="btn btn-outline-success quick-action-btn">
+                        <i class="bi bi-shield-check me-2"></i>
+                        Alterar Senha
+                    </button>
+                    <button class="btn btn-outline-info quick-action-btn">
+                        <i class="bi bi-question-circle me-2"></i>
+                        Central de Ajuda
+                    </button>
+                    <button class="btn btn-outline-danger quick-action-btn">
+                        <i class="bi bi-box-arrow-right me-2"></i>
+                        Sair da Conta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate profile stats on load
+    const statCards = document.querySelectorAll('.stat-card');
+    statCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            card.style.transition = 'all 0.5s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+
+    // Handle notification toggles
+    const toggles = document.querySelectorAll('.form-check-input');
+    toggles.forEach(toggle => {
+        toggle.addEventListener('change', function() {
+            const label = this.closest('.d-flex').querySelector('h6').textContent;
+            const status = this.checked ? 'ativada' : 'desativada';
+            
+            // Show a toast notification (you can implement this)
+            console.log(`Notificação ${label} ${status}`);
+        });
+    });
+
+    // Add hover effects to achievement items
+    const achievements = document.querySelectorAll('.card-body .d-flex');
+    achievements.forEach(achievement => {
+        achievement.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = '#f8f9fa';
+            this.style.borderRadius = '8px';
+            this.style.padding = '8px';
+            this.style.transition = 'all 0.3s ease';
+        });
+        
+        achievement.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = 'transparent';
+            this.style.padding = '0';
+        });
+    });
+});
+</script>
 {% endblock %}

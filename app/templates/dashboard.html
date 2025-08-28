@@ -2,6 +2,10 @@
 
 {% block title %}Dashboard - Anota-ai{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
 {% block content %}
 <div class="row">
     <div class="col-12">
@@ -22,74 +26,40 @@
 <!-- Cards de Resumo -->
 <div class="row mb-4">
     <div class="col-lg-3 col-md-6 mb-3">
-        <div class="card h-100" data-card="receitas" data-loading>
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0">
-                        <div class="bg-success bg-opacity-10 rounded-circle p-3">
-                            <i class="bi bi-arrow-up-circle text-success fs-4"></i>
-                        </div>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <div class="text-muted small">Receitas do Mês</div>
-                        <div class="fs-5 fw-bold text-success">R$ 0,00</div>
-                    </div>
-                </div>
+        <div class="summary-card-dashboard receitas">
+            <div class="summary-value-dashboard">R$ 8.750,00</div>
+            <div class="summary-label-dashboard">Total de Receitas</div>
+            <div class="summary-trend-dashboard">
+                <i class="bi bi-arrow-up"></i> +15,3% vs mês anterior
             </div>
         </div>
     </div>
     
     <div class="col-lg-3 col-md-6 mb-3">
-        <div class="card h-100" data-card="despesas" data-loading>
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0">
-                        <div class="bg-danger bg-opacity-10 rounded-circle p-3">
-                            <i class="bi bi-arrow-down-circle text-danger fs-4"></i>
-                        </div>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <div class="text-muted small">Despesas do Mês</div>
-                        <div class="fs-5 fw-bold text-danger">R$ 0,00</div>
-                    </div>
-                </div>
+        <div class="summary-card-dashboard despesas">
+            <div class="summary-value-dashboard">R$ 6.420,00</div>
+            <div class="summary-label-dashboard">Total de Despesas</div>
+            <div class="summary-trend-dashboard">
+                <i class="bi bi-arrow-down"></i> -8,7% vs mês anterior
             </div>
         </div>
     </div>
     
     <div class="col-lg-3 col-md-6 mb-3">
-        <div class="card h-100" data-card="saldo" data-loading>
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0">
-                        <div class="bg-primary bg-opacity-10 rounded-circle p-3">
-                            <i class="bi bi-wallet2 text-primary fs-4"></i>
-                        </div>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <div class="text-muted small">Saldo Atual</div>
-                        <div class="fs-5 fw-bold text-primary">R$ 0,00</div>
-                    </div>
-                </div>
+        <div class="summary-card-dashboard saldo">
+            <div class="summary-value-dashboard">R$ 2.330,00</div>
+            <div class="summary-label-dashboard">Saldo do Mês</div>
+            <div class="summary-trend-dashboard">
+                <i class="bi bi-arrow-up"></i> +42,1% vs mês anterior
             </div>
         </div>
     </div>
     
     <div class="col-lg-3 col-md-6 mb-3">
-        <div class="card h-100" data-card="economia" data-loading>
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0">
-                        <div class="bg-info bg-opacity-10 rounded-circle p-3">
-                            <i class="bi bi-graph-up text-info fs-4"></i>
-                        </div>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <div class="text-muted small">Economia</div>
-                        <div class="fs-5 fw-bold text-info">R$ 0,00</div>
-                    </div>
-                </div>
-            </div>
+        <div class="summary-card-dashboard transacoes">
+            <div class="summary-value-dashboard">28</div>
+            <div class="summary-label-dashboard">Transações</div>
+            <div class="summary-trend-dashboard">Este mês</div>
         </div>
     </div>
 </div>
@@ -97,9 +67,9 @@
 <!-- Gráficos e Tabelas -->
 <div class="row">
     <div class="col-lg-8 mb-4">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Fluxo de Caixa - Últimos 6 Meses</h5>
+        <div class="card card-enhanced">
+            <div class="card-header card-header-enhanced d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-bar-chart me-2"></i>Fluxo de Caixa - Últimos 6 Meses</h5>
                 <div class="dropdown">
                     <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
                         <i class="bi bi-three-dots"></i>
@@ -110,75 +80,83 @@
                     </ul>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body chart-container-dashboard">
                 <canvas id="fluxoCaixaChart" style="height: 300px;"></canvas>
             </div>
         </div>
     </div>
     
     <div class="col-lg-4 mb-4">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">Categorias mais gastas</h5>
+        <div class="card card-enhanced">
+            <div class="card-header card-header-enhanced">
+                <h5 class="mb-0"><i class="bi bi-pie-chart me-2"></i>Categorias mais gastas</h5>
             </div>
             <div class="card-body">
-                <div class="d-flex align-items-center mb-3">
-                    <div class="flex-shrink-0">
-                        <div class="bg-danger bg-opacity-10 rounded p-2">
-                            <i class="bi bi-house text-danger"></i>
+                <div class="category-item">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <div class="category-icon moradia">
+                                <i class="bi bi-house"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <div class="fw-semibold">Moradia</div>
-                        <div class="text-muted small">R$ 1.200,00</div>
-                    </div>
-                    <div class="text-end">
-                        <div class="text-danger">37.7%</div>
+                        <div class="flex-grow-1 ms-3">
+                            <div class="fw-semibold">Moradia</div>
+                            <div class="text-muted small">R$ 1.890,00</div>
+                        </div>
+                        <div class="text-end">
+                            <div class="category-percentage text-danger">29,4%</div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="d-flex align-items-center mb-3">
-                    <div class="flex-shrink-0">
-                        <div class="bg-warning bg-opacity-10 rounded p-2">
-                            <i class="bi bi-cart text-warning"></i>
+                <div class="category-item">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <div class="category-icon alimentacao">
+                                <i class="bi bi-cart"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <div class="fw-semibold">Alimentação</div>
-                        <div class="text-muted small">R$ 800,00</div>
-                    </div>
-                    <div class="text-end">
-                        <div class="text-warning">25.2%</div>
+                        <div class="flex-grow-1 ms-3">
+                            <div class="fw-semibold">Alimentação</div>
+                            <div class="text-muted small">R$ 1.540,00</div>
+                        </div>
+                        <div class="text-end">
+                            <div class="category-percentage text-warning">24,0%</div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="d-flex align-items-center mb-3">
-                    <div class="flex-shrink-0">
-                        <div class="bg-info bg-opacity-10 rounded p-2">
-                            <i class="bi bi-car-front text-info"></i>
+                <div class="category-item">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <div class="category-icon transporte">
+                                <i class="bi bi-car-front"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <div class="fw-semibold">Transporte</div>
-                        <div class="text-muted small">R$ 450,00</div>
-                    </div>
-                    <div class="text-end">
-                        <div class="text-info">14.2%</div>
+                        <div class="flex-grow-1 ms-3">
+                            <div class="fw-semibold">Transporte</div>
+                            <div class="text-muted small">R$ 920,00</div>
+                        </div>
+                        <div class="text-end">
+                            <div class="category-percentage text-info">14,3%</div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0">
-                        <div class="bg-secondary bg-opacity-10 rounded p-2">
-                            <i class="bi bi-three-dots text-secondary"></i>
+                <div class="category-item">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <div class="category-icon outros">
+                                <i class="bi bi-three-dots"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <div class="fw-semibold">Outros</div>
-                        <div class="text-muted small">R$ 730,00</div>
-                    </div>
-                    <div class="text-end">
-                        <div class="text-secondary">22.9%</div>
+                        <div class="flex-grow-1 ms-3">
+                            <div class="fw-semibold">Outros</div>
+                            <div class="text-muted small">R$ 2.070,00</div>
+                        </div>
+                        <div class="text-end">
+                            <div class="category-percentage text-secondary">32,3%</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -189,27 +167,76 @@
 <!-- Transações Recentes -->
 <div class="row">
     <div class="col-12">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Transações Recentes</h5>
-                <a href="{{ url_for('main.despesas_receitas') }}" class="btn btn-outline-primary btn-sm">
+        <div class="card card-enhanced">
+            <div class="card-header card-header-enhanced d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-list-ul me-2"></i>Transações Recentes</h5>
+                <a href="{{ url_for('main.despesas_receitas') }}" class="action-btn-dashboard primary">
                     Ver todas <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table id="transacoes-recentes" class="table table-hover mb-0">
-                        <thead class="table-light">
+                    <table class="table table-enhanced table-hover mb-0">
+                        <thead>
                             <tr>
                                 <th>Descrição</th>
+                                <th>Categoria</th>
                                 <th>Valor</th>
                                 <th>Data</th>
                                 <th>Tipo</th>
-                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Dados carregados via JavaScript -->
+                            <tr>
+                                <td>
+                                    <div class="fw-semibold">Salário - Agosto</div>
+                                    <div class="text-muted small">Recebimento do salário mensal</div>
+                                </td>
+                                <td><span class="transaction-type-badge receita">Trabalho</span></td>
+                                <td><span class="transaction-amount receita">+ R$ 4.500,00</span></td>
+                                <td>28/08/2025</td>
+                                <td><span class="transaction-type-badge receita">Receita</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="fw-semibold">Supermercado - Compras da semana</div>
+                                    <div class="text-muted small">Compras no Supermercado Central</div>
+                                </td>
+                                <td><span class="transaction-type-badge despesa">Alimentação</span></td>
+                                <td><span class="transaction-amount despesa">- R$ 285,70</span></td>
+                                <td>27/08/2025</td>
+                                <td><span class="transaction-type-badge despesa">Despesa</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="fw-semibold">Freelance - Design de Logo</div>
+                                    <div class="text-muted small">Projeto de identidade visual para cliente</div>
+                                </td>
+                                <td><span class="transaction-type-badge receita">Trabalho Extra</span></td>
+                                <td><span class="transaction-amount receita">+ R$ 800,00</span></td>
+                                <td>26/08/2025</td>
+                                <td><span class="transaction-type-badge receita">Receita</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="fw-semibold">Combustível - Posto Ipiranga</div>
+                                    <div class="text-muted small">Abastecimento completo do veículo</div>
+                                </td>
+                                <td><span class="transaction-type-badge despesa">Transporte</span></td>
+                                <td><span class="transaction-amount despesa">- R$ 95,40</span></td>
+                                <td>25/08/2025</td>
+                                <td><span class="transaction-type-badge despesa">Despesa</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="fw-semibold">Netflix - Assinatura Mensal</div>
+                                    <div class="text-muted small">Renovação automática da assinatura</div>
+                                </td>
+                                <td><span class="transaction-type-badge despesa">Entretenimento</span></td>
+                                <td><span class="transaction-amount despesa">- R$ 55,90</span></td>
+                                <td>24/08/2025</td>
+                                <td><span class="transaction-type-badge despesa">Despesa</span></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -218,16 +245,133 @@
     </div>
 </div>
 
-<!-- Incluir modais -->
-{% include 'modals/transacao.html' %}
+
 
 {% endblock %}
 
 {% block extra_js %}
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!-- Transaction management -->
-<script src="{{ url_for('static', filename='js/transactions.js') }}"></script>
-<!-- Dashboard specific JavaScript -->
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gráfico de Fluxo de Caixa
+    const ctx = document.getElementById('fluxoCaixaChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto'],
+            datasets: [{
+                label: 'Receitas',
+                data: [3200, 3500, 3800, 4100, 3900, 4200, 4000, 4500],
+                borderColor: '#28a745',
+                backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                tension: 0.4,
+                fill: true,
+                borderWidth: 3
+            }, {
+                label: 'Despesas',
+                data: [2800, 3200, 3100, 3600, 3400, 3800, 3500, 3200],
+                borderColor: '#dc3545',
+                backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                tension: 0.4,
+                fill: true,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 20,
+                        font: {
+                            size: 12,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                title: {
+                    display: false
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 11
+                        }
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.05)'
+                    },
+                    ticks: {
+                        callback: function(value) {
+                            return 'R$ ' + value.toLocaleString('pt-BR');
+                        },
+                        font: {
+                            size: 11
+                        }
+                    }
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            }
+        }
+    });
+
+    // Animação de loading para os cards
+    setTimeout(() => {
+        document.querySelectorAll('.summary-card-dashboard').forEach(card => {
+            card.classList.add('pulse-animation');
+            setTimeout(() => {
+                card.classList.remove('pulse-animation');
+            }, 2000);
+        });
+    }, 500);
+
+    // Hover effects para categorias
+    document.querySelectorAll('.category-item').forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateX(5px)';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateX(0)';
+        });
+    });
+
+    // Botão refresh
+    document.querySelector('[data-action="refresh"]').addEventListener('click', function() {
+        const icon = this.querySelector('i');
+        icon.style.animation = 'spin 1s linear infinite';
+        
+        setTimeout(() => {
+            icon.style.animation = '';
+            // Simular atualização dos dados
+            console.log('Dados atualizados!');
+        }, 1000);
+    });
+});
+
+// Animação de rotação para o ícone de refresh
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+`;
+document.head.appendChild(style);
+</script>
 {% endblock %}

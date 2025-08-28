@@ -2,16 +2,24 @@
 
 {% block title %}Despesas e Receitas - Anota-ai{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/despesas_receitas.css') }}">
+{% endblock %}
+
 {% block content %}
+<!-- Header com Ações -->
 <div class="row">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3 mb-0">Despesas e Receitas</h1>
+            <h1 class="h3 mb-0">
+                <i class="bi bi-currency-exchange text-primary me-2"></i>
+                Despesas e Receitas
+            </h1>
             <div>
-                <button class="btn btn-success me-2">
+                <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#modalReceita">
                     <i class="bi bi-plus-circle"></i> Nova Receita
                 </button>
-                <button class="btn btn-danger">
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDespesa">
                     <i class="bi bi-dash-circle"></i> Nova Despesa
                 </button>
             </div>
@@ -19,16 +27,621 @@
     </div>
 </div>
 
+<!-- Estatísticas Rápidas -->
+<div class="quick-stats">
+    <div class="quick-stat">
+        <div class="quick-stat-value">28</div>
+        <div class="quick-stat-label">Transações este mês</div>
+    </div>
+    <div class="quick-stat">
+        <div class="quick-stat-value">R$ 245,50</div>
+        <div class="quick-stat-label">Gasto médio por dia</div>
+    </div>
+    <div class="quick-stat">
+        <div class="quick-stat-value">7</div>
+        <div class="quick-stat-label">Categorias ativas</div>
+    </div>
+    <div class="quick-stat">
+        <div class="quick-stat-value">R$ 1.200,00</div>
+        <div class="quick-stat-label">Maior receita</div>
+    </div>
+</div>
+
+<!-- Indicador de Balanço -->
+<div class="balance-indicator balance-positive">
+    <strong><i class="bi bi-check-circle"></i> Situação Financeira Positiva</strong>
+    <p class="mb-0">Suas receitas estão superando suas despesas este mês. Continue assim!</p>
+</div>
+
+<!-- Filtros -->
+<div class="filter-section">
+    <h6><i class="bi bi-funnel"></i> Filtros e Período</h6>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="date-filter">
+                <label class="form-label">Período:</label>
+                <input type="date" class="form-control" value="2025-08-01">
+                <span>até</span>
+                <input type="date" class="form-control" value="2025-08-28">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Filtros rápidos:</label>
+            <div class="d-flex flex-wrap gap-2">
+                <button class="quick-filter-btn active">Hoje</button>
+                <button class="quick-filter-btn">Esta Semana</button>
+                <button class="quick-filter-btn">Este Mês</button>
+                <button class="quick-filter-btn">Últimos 3 meses</button>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <select class="form-select">
+                <option>Todas as categorias</option>
+                <option>Alimentação</option>
+                <option>Transporte</option>
+                <option>Moradia</option>
+                <option>Entretenimento</option>
+                <option>Saúde</option>
+                <option>Educação</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select">
+                <option>Todos os tipos</option>
+                <option>Apenas Receitas</option>
+                <option>Apenas Despesas</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Buscar por descrição...">
+        </div>
+    </div>
+</div>
+
+<!-- Lista de Transações -->
 <div class="row">
     <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">Gerenciar Transações</h5>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0"><i class="bi bi-list-ul"></i> Últimas Transações</h5>
+            <div>
+                <select class="form-select form-select-sm d-inline-block w-auto">
+                    <option>Ordenar por data (recente)</option>
+                    <option>Ordenar por valor (maior)</option>
+                    <option>Ordenar por categoria</option>
+                </select>
             </div>
-            <div class="card-body">
-                <p class="text-muted">Esta página será desenvolvida para gerenciar despesas e receitas.</p>
+        </div>
+
+        <!-- Transação 1 -->
+        <div class="transaction-card">
+            <div class="action-buttons">
+                <button class="action-btn btn-edit" title="Editar">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="action-btn btn-duplicate" title="Duplicar">
+                    <i class="bi bi-files"></i>
+                </button>
+                <button class="action-btn btn-delete" title="Excluir">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+            <div class="transaction-body">
+                <div class="d-flex align-items-center">
+                    <div class="transaction-icon transaction-receita">
+                        <i class="bi bi-arrow-up-right"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1">Salário - Agosto</h6>
+                        <div class="transaction-meta">
+                            <span class="transaction-category">Trabalho</span>
+                            <span class="ms-2">28/08/2025 às 10:30</span>
+                        </div>
+                        <p class="mb-0 text-muted">Recebimento do salário mensal</p>
+                    </div>
+                    <div class="transaction-amount receita">
+                        + R$ 4.500,00
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transação 2 -->
+        <div class="transaction-card">
+            <div class="action-buttons">
+                <button class="action-btn btn-edit" title="Editar">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="action-btn btn-duplicate" title="Duplicar">
+                    <i class="bi bi-files"></i>
+                </button>
+                <button class="action-btn btn-delete" title="Excluir">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+            <div class="transaction-body">
+                <div class="d-flex align-items-center">
+                    <div class="transaction-icon transaction-despesa">
+                        <i class="bi bi-arrow-down-left"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1">Supermercado - Compras da semana</h6>
+                        <div class="transaction-meta">
+                            <span class="transaction-category">Alimentação</span>
+                            <span class="ms-2">27/08/2025 às 18:45</span>
+                        </div>
+                        <p class="mb-0 text-muted">Compras no Supermercado Central</p>
+                    </div>
+                    <div class="transaction-amount despesa">
+                        - R$ 285,70
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transação 3 -->
+        <div class="transaction-card">
+            <div class="action-buttons">
+                <button class="action-btn btn-edit" title="Editar">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="action-btn btn-duplicate" title="Duplicar">
+                    <i class="bi bi-files"></i>
+                </button>
+                <button class="action-btn btn-delete" title="Excluir">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+            <div class="transaction-body">
+                <div class="d-flex align-items-center">
+                    <div class="transaction-icon transaction-receita">
+                        <i class="bi bi-arrow-up-right"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1">Freelance - Design de Logo</h6>
+                        <div class="transaction-meta">
+                            <span class="transaction-category">Trabalho Extra</span>
+                            <span class="ms-2">26/08/2025 às 14:20</span>
+                        </div>
+                        <p class="mb-0 text-muted">Projeto de identidade visual para cliente</p>
+                    </div>
+                    <div class="transaction-amount receita">
+                        + R$ 800,00
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transação 4 -->
+        <div class="transaction-card">
+            <div class="action-buttons">
+                <button class="action-btn btn-edit" title="Editar">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="action-btn btn-duplicate" title="Duplicar">
+                    <i class="bi bi-files"></i>
+                </button>
+                <button class="action-btn btn-delete" title="Excluir">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+            <div class="transaction-body">
+                <div class="d-flex align-items-center">
+                    <div class="transaction-icon transaction-despesa">
+                        <i class="bi bi-arrow-down-left"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1">Combustível - Posto Ipiranga</h6>
+                        <div class="transaction-meta">
+                            <span class="transaction-category">Transporte</span>
+                            <span class="ms-2">25/08/2025 às 08:15</span>
+                        </div>
+                        <p class="mb-0 text-muted">Abastecimento completo do veículo</p>
+                    </div>
+                    <div class="transaction-amount despesa">
+                        - R$ 95,40
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transação 5 -->
+        <div class="transaction-card">
+            <div class="action-buttons">
+                <button class="action-btn btn-edit" title="Editar">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="action-btn btn-duplicate" title="Duplicar">
+                    <i class="bi bi-files"></i>
+                </button>
+                <button class="action-btn btn-delete" title="Excluir">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+            <div class="transaction-body">
+                <div class="d-flex align-items-center">
+                    <div class="transaction-icon transaction-despesa">
+                        <i class="bi bi-arrow-down-left"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1">Netflix - Assinatura Mensal</h6>
+                        <div class="transaction-meta">
+                            <span class="transaction-category">Entretenimento</span>
+                            <span class="ms-2">24/08/2025 às 02:00</span>
+                        </div>
+                        <p class="mb-0 text-muted">Renovação automática da assinatura</p>
+                    </div>
+                    <div class="transaction-amount despesa">
+                        - R$ 55,90
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transação 6 -->
+        <div class="transaction-card">
+            <div class="action-buttons">
+                <button class="action-btn btn-edit" title="Editar">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="action-btn btn-duplicate" title="Duplicar">
+                    <i class="bi bi-files"></i>
+                </button>
+                <button class="action-btn btn-delete" title="Excluir">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+            <div class="transaction-body">
+                <div class="d-flex align-items-center">
+                    <div class="transaction-icon transaction-receita">
+                        <i class="bi bi-arrow-up-right"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1">Venda - Equipamento Antigo</h6>
+                        <div class="transaction-meta">
+                            <span class="transaction-category">Vendas</span>
+                            <span class="ms-2">23/08/2025 às 16:30</span>
+                        </div>
+                        <p class="mb-0 text-muted">Venda de notebook usado no marketplace</p>
+                    </div>
+                    <div class="transaction-amount receita">
+                        + R$ 1.200,00
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transação 7 -->
+        <div class="transaction-card">
+            <div class="action-buttons">
+                <button class="action-btn btn-edit" title="Editar">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="action-btn btn-duplicate" title="Duplicar">
+                    <i class="bi bi-files"></i>
+                </button>
+                <button class="action-btn btn-delete" title="Excluir">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+            <div class="transaction-body">
+                <div class="d-flex align-items-center">
+                    <div class="transaction-icon transaction-despesa">
+                        <i class="bi bi-arrow-down-left"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1">Farmácia - Medicamentos</h6>
+                        <div class="transaction-meta">
+                            <span class="transaction-category">Saúde</span>
+                            <span class="ms-2">22/08/2025 às 11:20</span>
+                        </div>
+                        <p class="mb-0 text-muted">Compra de medicamentos prescritos</p>
+                    </div>
+                    <div class="transaction-amount despesa">
+                        - R$ 78,30
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transação 8 -->
+        <div class="transaction-card">
+            <div class="action-buttons">
+                <button class="action-btn btn-edit" title="Editar">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="action-btn btn-duplicate" title="Duplicar">
+                    <i class="bi bi-files"></i>
+                </button>
+                <button class="action-btn btn-delete" title="Excluir">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+            <div class="transaction-body">
+                <div class="d-flex align-items-center">
+                    <div class="transaction-icon transaction-receita">
+                        <i class="bi bi-arrow-up-right"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1">Rendimento - Poupança</h6>
+                        <div class="transaction-meta">
+                            <span class="transaction-category">Investimentos</span>
+                            <span class="ms-2">21/08/2025 às 09:00</span>
+                        </div>
+                        <p class="mb-0 text-muted">Rendimento mensal da conta poupança</p>
+                    </div>
+                    <div class="transaction-amount receita">
+                        + R$ 45,80
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paginação -->
+        <div class="pagination-container">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <span class="page-link">Anterior</span>
+                    </li>
+                    <li class="page-item active">
+                        <span class="page-link">1</span>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Próximo</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Nova Receita -->
+<div class="modal fade" id="modalReceita" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-plus-circle me-2"></i>Nova Receita
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="descricaoReceita" placeholder="Descrição">
+                        <label for="descricaoReceita">Descrição da Receita</label>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="valorReceita" placeholder="Valor" step="0.01">
+                        <label for="valorReceita">Valor (R$)</label>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <select class="form-select" id="categoriaReceita">
+                            <option value="">Selecione uma categoria</option>
+                            <option value="trabalho">Trabalho</option>
+                            <option value="trabalho-extra">Trabalho Extra</option>
+                            <option value="vendas">Vendas</option>
+                            <option value="investimentos">Investimentos</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                        <label for="categoriaReceita">Categoria</label>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <input type="date" class="form-control" id="dataReceita">
+                        <label for="dataReceita">Data</label>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <textarea class="form-control" id="observacoesReceita" style="height: 100px" placeholder="Observações"></textarea>
+                        <label for="observacoesReceita">Observações (opcional)</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success">
+                    <i class="bi bi-check-circle"></i> Salvar Receita
+                </button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal Nova Despesa -->
+<div class="modal fade" id="modalDespesa" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-dash-circle me-2"></i>Nova Despesa
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="descricaoDespesa" placeholder="Descrição">
+                        <label for="descricaoDespesa">Descrição da Despesa</label>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="valorDespesa" placeholder="Valor" step="0.01">
+                        <label for="valorDespesa">Valor (R$)</label>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <select class="form-select" id="categoriaDespesa">
+                            <option value="">Selecione uma categoria</option>
+                            <option value="alimentacao">Alimentação</option>
+                            <option value="transporte">Transporte</option>
+                            <option value="moradia">Moradia</option>
+                            <option value="entretenimento">Entretenimento</option>
+                            <option value="saude">Saúde</option>
+                            <option value="educacao">Educação</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                        <label for="categoriaDespesa">Categoria</label>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <input type="date" class="form-control" id="dataDespesa">
+                        <label for="dataDespesa">Data</label>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <textarea class="form-control" id="observacoesDespesa" style="height: 100px" placeholder="Observações"></textarea>
+                        <label for="observacoesDespesa">Observações (opcional)</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger">
+                    <i class="bi bi-check-circle"></i> Salvar Despesa
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gráfico de Receitas vs Despesas
+    const ctx = document.getElementById('transactionsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago'],
+            datasets: [{
+                label: 'Receitas',
+                data: [3200, 3500, 3800, 4100, 3900, 4200, 4000, 4500],
+                borderColor: '#28a745',
+                backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                tension: 0.4,
+                fill: true
+            }, {
+                label: 'Despesas',
+                data: [2800, 3200, 3100, 3600, 3400, 3800, 3500, 3200],
+                borderColor: '#dc3545',
+                backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return 'R$ ' + value.toLocaleString('pt-BR');
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Filtros rápidos
+    document.querySelectorAll('.quick-filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.quick-filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // Formulários dos modais
+    document.querySelector('#modalReceita .btn-success').addEventListener('click', function() {
+        // Simular salvamento
+        this.innerHTML = '<i class="bi bi-check-circle"></i> Salvando...';
+        this.disabled = true;
+        
+        setTimeout(() => {
+            this.innerHTML = '<i class="bi bi-check-circle"></i> Salvo!';
+            this.classList.add('success-animation');
+            
+            setTimeout(() => {
+                bootstrap.Modal.getInstance(document.getElementById('modalReceita')).hide();
+                // Reset do botão
+                this.innerHTML = '<i class="bi bi-check-circle"></i> Salvar Receita';
+                this.disabled = false;
+                this.classList.remove('success-animation');
+                // Limpar formulário
+                document.querySelector('#modalReceita form').reset();
+            }, 1000);
+        }, 1500);
+    });
+
+    document.querySelector('#modalDespesa .btn-danger').addEventListener('click', function() {
+        // Simular salvamento
+        this.innerHTML = '<i class="bi bi-check-circle"></i> Salvando...';
+        this.disabled = true;
+        
+        setTimeout(() => {
+            this.innerHTML = '<i class="bi bi-check-circle"></i> Salvo!';
+            this.classList.add('success-animation');
+            
+            setTimeout(() => {
+                bootstrap.Modal.getInstance(document.getElementById('modalDespesa')).hide();
+                // Reset do botão
+                this.innerHTML = '<i class="bi bi-check-circle"></i> Salvar Despesa';
+                this.disabled = false;
+                this.classList.remove('success-animation');
+                // Limpar formulário
+                document.querySelector('#modalDespesa form').reset();
+            }, 1000);
+        }, 1500);
+    });
+
+    // Botões de ação nas transações
+    document.querySelectorAll('.btn-edit').forEach(btn => {
+        btn.addEventListener('click', function() {
+            alert('Funcionalidade de edição será implementada');
+        });
+    });
+
+    document.querySelectorAll('.btn-duplicate').forEach(btn => {
+        btn.addEventListener('click', function() {
+            alert('Funcionalidade de duplicação será implementada');
+        });
+    });
+
+    document.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (confirm('Tem certeza que deseja excluir esta transação?')) {
+                this.closest('.transaction-card').style.opacity = '0.5';
+                alert('Transação excluída (simulação)');
+            }
+        });
+    });
+
+    // Definir data padrão nos modais
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('dataReceita').value = today;
+    document.getElementById('dataDespesa').value = today;
+});
+</script>
 {% endblock %}

@@ -2,23 +2,514 @@
 
 {% block title %}Configurações - Anota-ai{% endblock %}
 
+{% block extra_css %}
+<link href="{{ url_for('static', filename='css/configuracoes.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-<div class="row">
+<!-- Page Header -->
+<div class="row mb-4">
     <div class="col-12">
-        <h1 class="h3 mb-4">Configurações</h1>
+        <h1 class="h3 mb-2">Configurações</h1>
+        <p class="text-muted">Gerencie suas preferências e configurações do sistema</p>
     </div>
 </div>
 
+<!-- Main Settings Content -->
 <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">Configurações do Sistema</h5>
+    <!-- Left Column -->
+    <div class="col-lg-8">
+        <!-- Account Settings -->
+        <div class="card settings-card mb-4">
+            <div class="card-header d-flex align-items-center">
+                <div class="settings-icon primary">
+                    <i class="bi bi-person-gear"></i>
+                </div>
+                <div>
+                    <h5 class="mb-0">Configurações da Conta</h5>
+                    <small class="text-muted">Gerencie informações pessoais e preferências</small>
+                </div>
             </div>
             <div class="card-body">
-                <p class="text-muted">Esta página será desenvolvida para configurações do sistema.</p>
+                <div class="settings-group">
+                    <h6 class="settings-group-title">Informações Pessoais</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nome de Exibição</label>
+                            <input type="text" class="form-control" value="Maria Silva">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" value="maria.silva@email.com">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Telefone</label>
+                            <input type="tel" class="form-control" value="(11) 99999-8888">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Fuso Horário</label>
+                            <select class="form-select">
+                                <option selected>América/São_Paulo (UTC-3)</option>
+                                <option>América/New_York (UTC-5)</option>
+                                <option>Europa/London (UTC+0)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h6 class="settings-group-title">Preferências de Idioma e Região</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Idioma</label>
+                            <select class="form-select">
+                                <option selected>Português (Brasil)</option>
+                                <option>English (US)</option>
+                                <option>Español (ES)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Formato de Data</label>
+                            <select class="form-select">
+                                <option selected>DD/MM/AAAA</option>
+                                <option>MM/DD/AAAA</option>
+                                <option>AAAA-MM-DD</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Moeda Padrão</label>
+                            <select class="form-select">
+                                <option selected>Real Brasileiro (R$)</option>
+                                <option>Dólar Americano ($)</option>
+                                <option>Euro (€)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Formato de Número</label>
+                            <select class="form-select">
+                                <option selected>1.234,56</option>
+                                <option>1,234.56</option>
+                                <option>1 234,56</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Settings -->
+        <div class="card settings-card mb-4">
+            <div class="card-header d-flex align-items-center">
+                <div class="settings-icon warning">
+                    <i class="bi bi-bell-fill"></i>
+                </div>
+                <div>
+                    <h5 class="mb-0">Notificações</h5>
+                    <small class="text-muted">Configure como e quando receber notificações</small>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="settings-group">
+                    <h6 class="settings-group-title">Notificações por Email</h6>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <strong>Relatórios Mensais</strong>
+                            <p class="text-muted mb-0 small">Receba resumo mensal das suas finanças</p>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" checked>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <strong>Alertas de Orçamento</strong>
+                            <p class="text-muted mb-0 small">Aviso quando atingir 80% do orçamento</p>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" checked>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <strong>Lembretes de Transações</strong>
+                            <p class="text-muted mb-0 small">Lembrete para registrar gastos diários</p>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h6 class="settings-group-title">Notificações Push</h6>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <strong>Transações Importantes</strong>
+                            <p class="text-muted mb-0 small">Valores acima de R$ 500,00</p>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" checked>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <strong>Metas Atingidas</strong>
+                            <p class="text-muted mb-0 small">Quando completar uma meta de economia</p>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" checked>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Theme and Appearance -->
+        <div class="card settings-card mb-4">
+            <div class="card-header d-flex align-items-center">
+                <div class="settings-icon info">
+                    <i class="bi bi-palette-fill"></i>
+                </div>
+                <div>
+                    <h5 class="mb-0">Aparência</h5>
+                    <small class="text-muted">Personalize a interface do sistema</small>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="settings-group">
+                    <h6 class="settings-group-title">Tema</h6>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="theme-preview theme-light active" data-theme="light">
+                                <i class="bi bi-sun-fill me-2"></i>
+                                Claro
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="theme-preview theme-dark" data-theme="dark">
+                                <i class="bi bi-moon-fill me-2"></i>
+                                Escuro
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="theme-preview theme-auto" data-theme="auto">
+                                <i class="bi bi-circle-half me-2"></i>
+                                Automático
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h6 class="settings-group-title">Cores Personalizadas</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Cor Primária</label>
+                            <div class="d-flex align-items-center">
+                                <input type="color" class="color-picker me-3" value="#4a90e2">
+                                <span class="text-muted">#4a90e2</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Cor de Sucesso</label>
+                            <div class="d-flex align-items-center">
+                                <input type="color" class="color-picker me-3" value="#28a745">
+                                <span class="text-muted">#28a745</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy and Security -->
+        <div class="card settings-card mb-4">
+            <div class="card-header d-flex align-items-center">
+                <div class="settings-icon danger">
+                    <i class="bi bi-shield-fill-check"></i>
+                </div>
+                <div>
+                    <h5 class="mb-0">Privacidade e Segurança</h5>
+                    <small class="text-muted">Proteja sua conta e dados pessoais</small>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="security-item">
+                    <div class="security-status active">
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                        <div>
+                            <strong>Autenticação de Dois Fatores</strong>
+                            <p class="text-muted mb-0 small">Ativa desde 15/01/2024</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-primary btn-sm action-btn">Configurar</button>
+                </div>
+
+                <div class="security-item">
+                    <div class="security-status warning">
+                        <i class="bi bi-exclamation-circle-fill me-2"></i>
+                        <div>
+                            <strong>Sessões Ativas</strong>
+                            <p class="text-muted mb-0 small">3 dispositivos conectados</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-warning btn-sm action-btn">Gerenciar</button>
+                </div>
+
+                <div class="security-item">
+                    <div class="security-status active">
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                        <div>
+                            <strong>Backup Automático</strong>
+                            <p class="text-muted mb-0 small">Último backup: hoje às 03:00</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-success btn-sm action-btn">Baixar</button>
+                </div>
+
+                <div class="security-item">
+                    <div class="security-status inactive">
+                        <i class="bi bi-x-circle-fill me-2"></i>
+                        <div>
+                            <strong>Login por Biometria</strong>
+                            <p class="text-muted mb-0 small">Não configurado</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-secondary btn-sm action-btn">Ativar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="col-lg-4">
+        <!-- Data Usage Stats -->
+        <div class="card settings-card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-bar-chart-fill text-primary me-2"></i>
+                    Uso de Dados
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="usage-card mb-3">
+                    <h3>1.247</h3>
+                    <p>Transações Registradas</p>
+                    <div class="progress-custom">
+                        <div class="progress-bar bg-primary" style="width: 78%"></div>
+                    </div>
+                    <small class="text-muted">78% da cota mensal</small>
+                </div>
+
+                <div class="usage-card mb-3">
+                    <h3>45.2 MB</h3>
+                    <p>Dados Armazenados</p>
+                    <div class="progress-custom">
+                        <div class="progress-bar bg-success" style="width: 23%"></div>
+                    </div>
+                    <small class="text-muted">23% do limite</small>
+                </div>
+
+                <div class="usage-card">
+                    <h3>127</h3>
+                    <p>Dias de Histórico</p>
+                    <div class="progress-custom">
+                        <div class="progress-bar bg-info" style="width: 85%"></div>
+                    </div>
+                    <small class="text-muted">Desde janeiro/2024</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Backup Status -->
+        <div class="card settings-card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-cloud-arrow-up-fill text-primary me-2"></i>
+                    Status do Backup
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="backup-status success">
+                    <i class="bi bi-check-circle-fill me-3"></i>
+                    <div>
+                        <strong>Backup Atualizado</strong>
+                        <p class="mb-0 small">Último backup: Hoje às 03:00</p>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <small class="text-muted">Próximo backup automático</small>
+                    <p class="mb-0"><strong>Amanhã às 03:00</strong></p>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary action-btn">
+                        <i class="bi bi-cloud-arrow-up me-2"></i>
+                        Fazer Backup Agora
+                    </button>
+                    <button class="btn btn-outline-secondary action-btn">
+                        <i class="bi bi-cloud-arrow-down me-2"></i>
+                        Restaurar Backup
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Info -->
+        <div class="card settings-card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-info-circle-fill text-primary me-2"></i>
+                    Informações do Sistema
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <small class="text-muted">Versão do App</small>
+                    <p class="mb-0"><strong>v2.1.4</strong></p>
+                </div>
+                <div class="mb-3">
+                    <small class="text-muted">Última Atualização</small>
+                    <p class="mb-0"><strong>15 de Agosto, 2024</strong></p>
+                </div>
+                <div class="mb-3">
+                    <small class="text-muted">Plano Atual</small>
+                    <p class="mb-0"><strong>Premium</strong> 
+                        <span class="badge bg-success ms-1">Ativo</span>
+                    </p>
+                </div>
+                <div class="mb-3">
+                    <small class="text-muted">Renovação</small>
+                    <p class="mb-0"><strong>15 de Janeiro, 2025</strong></p>
+                </div>
+
+                <div class="d-grid">
+                    <button class="btn btn-outline-primary action-btn">
+                        <i class="bi bi-arrow-clockwise me-2"></i>
+                        Verificar Atualizações
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card settings-card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-lightning-fill text-primary me-2"></i>
+                    Ações Rápidas
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-outline-primary action-btn">
+                        <i class="bi bi-download me-2"></i>
+                        Exportar Dados
+                    </button>
+                    <button class="btn btn-outline-warning action-btn">
+                        <i class="bi bi-arrow-clockwise me-2"></i>
+                        Limpar Cache
+                    </button>
+                    <button class="btn btn-outline-info action-btn">
+                        <i class="bi bi-question-circle me-2"></i>
+                        Central de Ajuda
+                    </button>
+                    <button class="btn btn-outline-danger action-btn">
+                        <i class="bi bi-trash me-2"></i>
+                        Excluir Conta
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Theme selection
+    const themeButtons = document.querySelectorAll('.theme-preview');
+    themeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            themeButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const theme = this.dataset.theme;
+            console.log(`Tema alterado para: ${theme}`);
+            
+            // Add visual feedback
+            this.classList.add('settings-updated');
+            setTimeout(() => {
+                this.classList.remove('settings-updated');
+            }, 2000);
+        });
+    });
+
+    // Toggle switches
+    const toggles = document.querySelectorAll('.form-check-input');
+    toggles.forEach(toggle => {
+        toggle.addEventListener('change', function() {
+            const card = this.closest('.settings-group');
+            if (card) {
+                card.classList.add('settings-updated');
+                setTimeout(() => {
+                    card.classList.remove('settings-updated');
+                }, 2000);
+            }
+            console.log(`Toggle ${this.checked ? 'ativado' : 'desativado'}`);
+        });
+    });
+
+    // Color picker
+    const colorPickers = document.querySelectorAll('.color-picker');
+    colorPickers.forEach(picker => {
+        picker.addEventListener('change', function() {
+            const span = this.nextElementSibling;
+            span.textContent = this.value;
+            console.log(`Cor alterada para: ${this.value}`);
+        });
+    });
+
+    // Action buttons
+    const actionButtons = document.querySelectorAll('.action-btn');
+    actionButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const action = this.textContent.trim();
+            console.log(`Ação executada: ${action}`);
+            
+            // Add loading state
+            const originalText = this.innerHTML;
+            this.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processando...';
+            this.disabled = true;
+            
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.disabled = false;
+            }, 2000);
+        });
+    });
+
+    // Form validation
+    const forms = document.querySelectorAll('input, select');
+    forms.forEach(input => {
+        input.addEventListener('change', function() {
+            this.classList.add('settings-updated');
+            setTimeout(() => {
+                this.classList.remove('settings-updated');
+            }, 1000);
+        });
+    });
+
+    // Auto-save simulation
+    setInterval(() => {
+        const lastSaved = document.querySelector('.text-muted');
+        if (lastSaved && lastSaved.textContent.includes('Último backup')) {
+            const now = new Date();
+            lastSaved.textContent = `Último backup: Hoje às ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+        }
+    }, 30000);
+});
+</script>
 {% endblock %}

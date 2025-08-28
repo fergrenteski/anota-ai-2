@@ -1,0 +1,345 @@
+/* ===== CONFIGURAÇÕES PAGE STYLES ===== */
+
+/* Settings Section Cards */
+.settings-card {
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
+}
+
+.settings-card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.settings-card .card-header {
+    border-bottom: 2px solid #abc8e4;
+    font-weight: 600;
+}
+
+/* Settings Icons */
+.settings-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+
+.settings-icon.primary {
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+    color: white;
+}
+
+.settings-icon.success {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+}
+
+.settings-icon.warning {
+    background: linear-gradient(135deg, #ffc107, #fd7e14);
+    color: white;
+}
+
+.settings-icon.danger {
+    background: linear-gradient(135deg, #dc3545, #e83e8c);
+    color: white;
+}
+
+.settings-icon.info {
+    background: linear-gradient(135deg, #17a2b8, #6f42c1);
+    color: white;
+}
+
+/* Toggle Switches */
+.form-switch .form-check-input {
+    width: 3rem;
+    height: 1.5rem;
+    cursor: pointer;
+    background-color: #e9ecef;
+    border-color: #ced4da;
+    transition: all 0.3s ease;
+}
+
+.form-switch .form-check-input:checked {
+    background-color: #4a90e2;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 0.25rem rgba(74, 144, 226, 0.25);
+}
+
+.form-switch .form-check-input:focus {
+    border-color: #4a90e2;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(74, 144, 226, 0.25);
+}
+
+/* Settings Form Groups */
+.settings-group {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.settings-group:hover {
+    background-color: #f8f9fa;
+    border-color: #4a90e2;
+}
+
+.settings-group-title {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+/* Color Picker */
+.color-picker {
+    width: 50px;
+    height: 35px;
+    border: 2px solid #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.color-picker:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Theme Preview */
+.theme-preview {
+    width: 100%;
+    height: 60px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.theme-preview:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.theme-preview.active {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.25);
+}
+
+.theme-light {
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    color: #212529;
+}
+
+.theme-dark {
+    background: linear-gradient(135deg, #343a40, #495057);
+    color: #ffffff;
+}
+
+.theme-auto {
+    background: linear-gradient(135deg, #ffffff 50%, #343a40 50%);
+    color: #495057;
+}
+
+/* Settings Stats */
+.settings-stats {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.settings-stats h5 {
+    color: #4a90e2;
+    font-weight: 600;
+}
+
+.settings-stats p {
+    color: #6c757d;
+    font-size: 0.875rem;
+    margin-bottom: 0;
+}
+
+/* Progress Bars */
+.progress-custom {
+    height: 8px;
+    border-radius: 4px;
+    background-color: #e9ecef;
+    overflow: hidden;
+}
+
+.progress-custom .progress-bar {
+    border-radius: 4px;
+    transition: width 0.6s ease;
+}
+
+/* Backup Status */
+.backup-status {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.backup-status.success {
+    background-color: rgba(40, 167, 69, 0.1);
+    border: 1px solid rgba(40, 167, 69, 0.2);
+    color: #155724;
+}
+
+.backup-status.warning {
+    background-color: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.2);
+    color: #856404;
+}
+
+.backup-status.error {
+    background-color: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.2);
+    color: #721c24;
+}
+
+/* Action Buttons */
+.action-btn {
+    min-width: 120px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Data Usage Cards */
+.usage-card {
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    transition: all 0.3s ease;
+}
+
+.usage-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.usage-card h3 {
+    color: #4a90e2;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.usage-card p {
+    color: #6c757d;
+    font-size: 0.875rem;
+    margin-bottom: 0;
+}
+
+/* Security Section */
+.security-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.security-item:hover {
+    background-color: #f8f9fa;
+    border-color: #4a90e2;
+}
+
+.security-status {
+    display: flex;
+    align-items: center;
+}
+
+.security-status.active {
+    color: #28a745;
+}
+
+.security-status.inactive {
+    color: #dc3545;
+}
+
+.security-status.warning {
+    color: #ffc107;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .settings-card {
+        margin-bottom: 1rem;
+    }
+    
+    .settings-group {
+        padding: 1rem;
+    }
+    
+    .theme-preview {
+        height: 50px;
+        font-size: 0.875rem;
+    }
+    
+    .usage-card {
+        padding: 1rem;
+    }
+    
+    .settings-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .security-item {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+    
+    .security-item .btn {
+        margin-top: 0.5rem;
+        width: 100%;
+    }
+    
+    .action-btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Animation for settings changes */
+@keyframes settingsUpdate {
+    0% {
+        background-color: #fff3cd;
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+.settings-updated {
+    animation: settingsUpdate 2s ease;
+}
+
+/* Dark Mode Support */
+
