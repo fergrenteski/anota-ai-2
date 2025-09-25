@@ -1,136 +1,46 @@
-@startuml Memento_Pattern_Usuario
+@startuml Memento Pattern
 
-!theme plain
-skinparam classAttributeIconSize 0
-skinparam classFontStyle bold
+title Padrão Memento - Sistema Usuario
 
-package "Padrão Memento - Usuario" {
-
-    class Usuario {
-        -id: Integer
-        -nome: String
-        -email: String
-        -senha_hash: String
-        -data_nascimento: Date
-        -telefone: String
-        -endereco: String
-        -ativo: Boolean
-        -created_at: DateTime
-        -updated_at: DateTime
-        
-        +__init__(nome, email, senha, ...)
-        +set_senha(senha: String): void
-        +check_senha(senha: String): Boolean
-        +criar_memento(): UsuarioMemento
-        +restaurar_memento(memento: UsuarioMemento): void
-        +to_dict(): Dictionary
-    }
-
-    class UsuarioMemento {
-        -_nome: String
-        -_email: String
-        -_data_nascimento: Date
-        -_telefone: String
-        -_endereco: String
-        -_ativo: Boolean
-        -_timestamp: DateTime
-        
-        +__init__(nome, email, data_nascimento, ...)
-        +nome: String {readonly}
-        +email: String {readonly}
-        +data_nascimento: Date {readonly}
-        +telefone: String {readonly}
-        +endereco: String {readonly}
-        +ativo: Boolean {readonly}
-        +timestamp: DateTime {readonly}
-        +__str__(): String
-    }
-
-    class CaretakerUsuario {
-        -_historico: List<UsuarioMemento>
-        -_indice_atual: Integer
-        
-        +__init__()
-        +salvar_estado(usuario: Usuario): void
-        +desfazer(usuario: Usuario): Boolean
-        +refazer(usuario: Usuario): Boolean
-        +obter_historico(): List<UsuarioMemento>
-        +limpar_historico(): void
-        +pode_desfazer(): Boolean
-        +pode_refazer(): Boolean
-    }
-
-    class PerfilService {
-        -usuario_repository: UsuarioRepository
-        -caretaker: CaretakerUsuario
-        
-        +__init__()
-        +obter_usuario_por_id(usuario_id: Integer): Usuario
-        +atualizar_perfil(usuario_id: Integer, dados: Dict): void
-        +alterar_senha(usuario_id: Integer, senha_atual: String, nova_senha: String): void
-        +desativar_usuario(usuario_id: Integer): void
-        +ativar_usuario(usuario_id: Integer): void
-        +desfazer_alteracao(usuario_id: Integer): Boolean
-        +refazer_alteracao(usuario_id: Integer): Boolean
-        +obter_historico_alteracoes(usuario_id: Integer): List
-        +limpar_historico(usuario_id: Integer): void
-        +pode_desfazer(usuario_id: Integer): Boolean
-        +pode_refazer(usuario_id: Integer): Boolean
-    }
-
-    class UsuarioRepository {
-        +buscar_por_email(email: String): Usuario
-        +buscar_ativos(): List<Usuario>
-        +buscar_inativos(): List<Usuario>
-        +email_existe(email: String, excluir_id: Integer): Boolean
-        +atualizar_senha(usuario_id: Integer, nova_senha_hash: String): void
-        +desativar(usuario_id: Integer): void
-        +ativar(usuario_id: Integer): void
-    }
-
-    class BaseModel {
-        <<abstract>>
-        #id: Integer
-        #created_at: DateTime
-        #updated_at: DateTime
-        
-        +save(): Self
-        +delete(): void
-        +update(**kwargs): Self
-        +to_dict(): Dictionary
-    }
-
-    class BaseRepository {
-        <<abstract>>
-        #model_class: Class
-        
-        +criar(dados: Dict): Model
-        +buscar_por_id(id: Integer): Model
-        +buscar_todos(): List<Model>
-        +atualizar(id: Integer, dados: Dict): Model
-        +deletar(id: Integer): void
-    }
+class Usuario <<Originator>> {
+    -nome: String
+    -email: String
+    -ativo: Boolean
+    --
+    +criar_memento(): UsuarioMemento
+    +restaurar_memento(memento: UsuarioMemento): void
+    +set_nome(nome: String): void
+    +set_email(email: String): void
 }
 
-' Relacionamentos
-Usuario --|> BaseModel : extends
-UsuarioRepository --|> BaseRepository : extends
+class UsuarioMemento <<Memento>> {
+    -_nome: String
+    -_email: String
+    -_ativo: Boolean
+    -_timestamp: DateTime
+    --
+    +nome(): String
+    +email(): String
+    +ativo(): Boolean
+    +timestamp(): DateTime
+}
 
-Usuario ..> UsuarioMemento : creates
-CaretakerUsuario o-- UsuarioMemento : manages
+class CaretakerUsuario <<Caretaker>> {
+    -_historico: List<UsuarioMemento>
+    -_indice_atual: int
+    -_max_historico: int
+    --
+    +salvar_estado(usuario: Usuario): void
+    +desfazer(usuario: Usuario): Boolean
+    +refazer(usuario: Usuario): Boolean
+    +obter_historico(): List<UsuarioMemento>
+    +limpar_historico(): void
+    +pode_desfazer(): Boolean
+    +pode_refazer(): Boolean
+    +navegar_para(indice: int, usuario: Usuario): Boolean
+}
 
-PerfilService o-- UsuarioRepository : uses
-PerfilService o-- CaretakerUsuario : uses
-
-CaretakerUsuario ..> Usuario : restores state
-
-' Notas explicativas
-note right of Usuario : "Originator - Cria e usa\nmementos para salvar/restaurar\nseu estado interno"
-
-note right of UsuarioMemento : "Memento - Armazena o\nestado interno do Usuario\nde forma imutável"
-
-note right of CaretakerUsuario : "Caretaker - Gerencia os\nmementos sem acessar\nseu conteúdo diretamente"
-
-note right of PerfilService : "Client - Usa o padrão\nMemento através do\nCaretaker para operações\nde undo/redo"
+Usuario --> UsuarioMemento
+CaretakerUsuario o-- UsuarioMemento
 
 @enduml

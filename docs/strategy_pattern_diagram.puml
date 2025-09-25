@@ -1,0 +1,52 @@
+@startuml Strategy Pattern - Sistema de Relatórios
+
+title Padrão Strategy - Sistema de Relatórios Anota-ai
+
+' Interface Strategy
+interface RelatorioStrategy <<interface>> {
+    + gerar_relatorio(dados)
+}
+
+' Estratégias Concretas
+class RelatorioCsvStrategy {
+    + gerar_relatorio(dados)
+    --
+    Gera relatórios em formato CSV
+    usando biblioteca csv nativa
+}
+
+class RelatorioExcelStrategy {
+    + gerar_relatorio(dados)
+    --
+    Gera relatórios em formato Excel
+    usando pandas (se disponível)
+}
+
+class RelatorioPdfStrategy {
+    + gerar_relatorio(dados)
+    --
+    Gera relatórios em formato PDF
+    usando reportlab (se disponível)
+}
+
+' Context
+class RelatoriosService {
+    - _strategy: RelatorioStrategy
+    --
+    + __init__()
+    + set_strategy(strategy: RelatorioStrategy)
+    + gerar(dados)
+    --
+    Contexto que utiliza as estratégias
+    para gerar relatórios
+}
+
+
+' Relacionamentos
+RelatorioStrategy <|.. RelatorioCsvStrategy : <<implements>>
+RelatorioStrategy <|.. RelatorioExcelStrategy : <<implements>>
+RelatorioStrategy <|.. RelatorioPdfStrategy : <<implements>>
+
+RelatoriosService o-- RelatorioStrategy
+
+@enduml
